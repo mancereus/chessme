@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	<ui:style>
+		.title {
+			background-color: Skyblue;
+			color: black;
+			font-size: 16pt;
+			text-align: center;
+			vertical-align: middle;
+		}
+		
+		.hand {
+			background-color: gray;
+			color: black;
+			font-size: 16pt;
+			text-align: center;
+			vertical-align: middle;
+		}
+		.sidebar {
+			height: 80%;	
+		}
+	</ui:style>
+	<g:DockLayoutPanel unit='EM'>
+		<g:north size='2'>
+			<g:Label styleName='{style.title}'>ChessIt</g:Label>
+		</g:north>
+		<g:west styleName='{style.sidebar}' size='20'>
+			<g:DockLayoutPanel  unit='EM'>
+				<g:north size='10'>
+					<g:FlowPanel styleName='{style.hand}' ui:field="whand"></g:FlowPanel>
+				</g:north>
+				<g:north size='10'>
+					<g:FlowPanel styleName='{style.hand}' ui:field="bhand"></g:FlowPanel>
+				</g:north>
+				<g:north size='20'>
+					<g:FlowPanel styleName='{style.hand}'  ui:field="help"></g:FlowPanel>
+				</g:north>
+				<g:south size='10'>
+					<g:FlowPanel styleName='{style.hand}'  ui:field="wdrop"></g:FlowPanel>
+				</g:south>
+				<g:south size='10'>
+					<g:FlowPanel styleName='{style.hand}'  ui:field="bdrop"></g:FlowPanel>
+				</g:south>
+			</g:DockLayoutPanel>
+		</g:west>
+		<g:center>
+			<g:AbsolutePanel ui:field="table">
+			</g:AbsolutePanel>
+		</g:center>
+	</g:DockLayoutPanel>
+</ui:UiBinder>

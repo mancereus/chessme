@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='chessit'>
+	<inherits name='com.google.gwt.user.User' />
+
+	<!-- <inherits name='com.google.gwt.user.theme.standard.Standard' /> -->
+	<!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+	<inherits name='com.google.gwt.user.theme.dark.Dark' />
+
+	<!-- For development a default of `DEBUG` is recommended -->
+	<inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />
+
+	<!-- Inherit gwt-dnd support -->
+	<inherits name='com.allen_sauer.gwt.dnd.gwt-dnd' />
+
+	<!-- Other module inherits -->
+	<inherits name="com.google.gwt.uibinder.UiBinder" />
+	<inherits name="com.google.gwt.inject.Inject" />
+	<inherits name="com.gwtplatform.mvp.Mvp" />
+	
+	<define-configuration-property name="gin.ginjector" is-multi-valued="false" />
+  	<set-configuration-property name="gin.ginjector" value="de.db12.game.chessit.client.MyGinjector" /> 
+	
+	<!-- Specify the app entry point class. -->
+	<entry-point class='de.db12.game.chessit.client.ChessIt' />
+
+	<!-- Specify the paths for translatable code -->
+	<source path='client' />
+	<source path='shared' />
+
+</module>
