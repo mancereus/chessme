@@ -2,7 +2,6 @@ package de.db12.game.chessit.client.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-import de.db12.game.chessit.client.online.model.Field;
 import de.db12.game.chessit.client.online.model.Place;
 import de.db12.game.chessit.client.online.model.Stone;
 

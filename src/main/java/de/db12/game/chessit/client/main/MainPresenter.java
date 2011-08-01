@@ -1,15 +1,15 @@
 package de.db12.game.chessit.client.main;
 
+import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.EventBus;
-import com.gwtplatform.mvp.client.PresenterImpl;
+import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 
-public class MainPresenter extends PresenterImpl<MainPresenter.MyView, MainPresenter.MyProxy> {
+public class MainPresenter extends Presenter<MainPresenter.MyView, MainPresenter.MyProxy> {
 
     public interface MyView extends View {
     }
@@ -28,7 +28,7 @@ public class MainPresenter extends PresenterImpl<MainPresenter.MyView, MainPrese
 
     @Override
     protected void revealInParent() {
-        RevealRootContentEvent.fire(eventBus, this);
+        RevealRootContentEvent.fire(this, this);
     }
 
 }

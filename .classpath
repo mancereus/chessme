@@ -5,11 +5,20 @@
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-log-3.0.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-dnd-3.0.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtp-0.3.jar"/>
-	<classpathentry kind="lib" path="lib/aopalliance.jar"/>
-	<classpathentry kind="lib" path="lib/gin-r137.jar"/>
-	<classpathentry kind="lib" path="lib/guice-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/asm-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/cglib-2.2.1-v20090111.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/gin-1.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/guava-r09.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/guice-3.0.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/guice-assistedinject-3.0-rc2.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/gwt-dnd-2.5.6.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/gwt-servlet-2.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/gwtp-clients-common-0.6.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/gwtp-mvp-client-0.6.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/gwtp-processors-0.6.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/javax.inject-1.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/slf4j-simple-1.6.1.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

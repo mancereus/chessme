@@ -2,7 +2,7 @@ package de.db12.game.chessit.client.online;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.drop.SimpleDropController;
-import com.gwtplatform.mvp.client.EventBus;
+import com.google.gwt.event.shared.EventBus;
 
 import de.db12.game.chessit.client.event.MoveStoneEvent;
 

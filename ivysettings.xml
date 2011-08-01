@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<ivysettings>
+    <!--
+    <include url="${ivy.default.settings.dir}/ivysettings-public.xml"/>
+    -->
+    <include url="${ivy.default.settings.dir}/ivysettings-shared.xml"/>
+    <include url="${ivy.default.settings.dir}/ivysettings-local.xml"/>
+
+    <settings defaultResolver="default"/>
+    <resolvers>
+        <url name="exubero">
+	        <ivy      pattern="http://www.exubero.com/repo/[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" />
+	        <artifact pattern="http://www.exubero.com/repo/[organisation]/[module]/[revision]/[type]s/[artifact]-[revision].[ext]" />
+	        <artifact pattern="http://www.exubero.com/repo/[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" />
+        </url>
+        
+        <ibiblio name="jqwicket" m2compatible="true" root="http://jqwicket.googlecode.com/svn/m2-repo/releases/"/>
+        <ibiblio name="google" m2compatible="true" root="https://oss.sonatype.org/content/repositories/google-snapshots/"/>
+        <ibiblio name="junitbench" m2compatible="true" root="https://oss.sonatype.org/content/groups/public/"/>
+        <ibiblio name="guiceyfruit" m2compatible="true" root="http://guiceyfruit.googlecode.com/svn/repo/releases/"/>
+        <ibiblio name="gwtp" m2compatible="true" root="http://dep.gwt-platform.googlecode.com/hg/release-repository"/>
+        <ibiblio name="jboss" m2compatible="true" root="https://repository.jboss.org/nexus/content/repositories/releases/"/>
+        <ibiblio name="jboss.old" m2compatible="true" root="http://repository.jboss.org/maven2/"/>
+        <ibiblio name="java.net" m2compatible="true" root="http://download.java.net/maven/2/"/>
+		<ibiblio name="snapshots" m2compatible="true" root="https://oss.sonatype.org/content/repositories/snapshots/"/>"
+<!--		<ibiblio name="avaje.org" m2compatible="true" root="http://www.avaje.org/archiva/repository/internal/"/>"-->
+		<ibiblio name="gilead" m2compatible="true" root="https://gilead.svn.sourceforge.net/svnroot/gilead/gilead/maven-repo/"/>"
+		<ibiblio name="sfeir.gwtp" m2compatible="true" root="http://code.google.com/p/sfeir/source/browse/repository/"/>"
+        <ibiblio name="maven2" m2compatible="true" />
+        
+        
+        <chain name="default" returnFirst="true">
+            <resolver ref="local"/>
+            <resolver ref="shared"/>
+            <resolver ref="exubero"/>
+            <resolver ref="jboss"/>
+            <resolver ref="jqwicket"/>
+            <resolver ref="maven2"/>
+            <resolver ref="google"/>
+            <resolver ref="snapshots"/>
+            <resolver ref="java.net"/>
+            <resolver ref="junitbench"/>
+        </chain>
+    </resolvers>
+
+</ivysettings>

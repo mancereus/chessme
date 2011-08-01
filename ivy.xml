@@ -1,0 +1,44 @@
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info organisation="de.db12" module="chessme" revision="1.0" />
+
+	<configurations>
+		<conf name="runtime" description="compile and runtime" />
+		<conf name="buildtime" description="only compile, not runtime" />
+		<conf name="test" description="test libraries" />
+		<conf name="undeployed" description="sources"/>
+	</configurations>
+	<dependencies defaultconfmapping="runtime->default">
+		<!-- base util libs; ref="latest.integration" for latest version -->
+		<dependency org="com.google.guava" name="guava" rev="r09" conf="runtime->default;undeployed->sources"/>
+		<!-- DI -->
+	    <dependency org="com.google.gwt.inject" name="gin" rev="1.5.0"/>
+		<dependency org="com.google.inject" name="guice" rev="3.0"  conf="runtime->default;undeployed->sources"/>
+		<dependency org="com.gwtplatform" name="gwtp-mvp-client" rev="0.6"/>
+		<dependency org="com.gwtplatform" name="gwtp-clients-common" rev="0.6"/>
+		<dependency org="com.gwtplatform" name="gwtp-processors" rev="0.6"/>
+		<dependency org="com.google.code.gwt-dnd" name="gwt-dnd" rev="2.5.6"/>
+<!-- 		<dependency org="com.google.gwt.inject" name="gin" rev="1.5.0"/> -->
+		
+<!-- 		<dependency org="com.google.inject.extensions" name="guice-multibindings" rev="3.0"/> -->
+<!-- 		<dependency org="com.google.inject.extensions" name="guice-persist" rev="3.0"  conf="runtime->default;undeployed->sources"/> -->
+<!--         <dependency org="com.google.inject.extensions" name="guice-servlet" rev="3.0"/> -->
+<!--		<dependency org="com.googlecode.rocoto" name="rocoto" rev="4.0"/>-->
+		
+		
+		<!-- logging -->
+		<dependency org="org.slf4j" name="slf4j-simple" rev="1.6.1"/>
+		
+		<!-- Joda Date -->
+<!-- 		<dependency org="joda-time" name="joda-time" rev="1.6.2"/> -->
+
+		<!-- test -->
+<!-- 		<dependency org="org.mockito" name="mockito-all" rev="1.8.5" conf="test->default" /> -->
+		<dependency org="junit" name="junit" rev="4.8.2" conf="test->default" />
+<!-- 		<dependency org="org.jukito" name="jukito" rev="1.1" conf="test->default" /> -->
+<!--         <dependency org="com.carrotsearch" name="junit-benchmarks" rev="0.2.1" conf="test->default" /> -->
+<!--         <dependency org="com.google.inject.extensions" name="guice-assistedinject" rev="3.0" conf="test->default" /> -->
+        
+		
+	</dependencies>
+</ivy-module>

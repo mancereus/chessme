@@ -3,13 +3,13 @@ package de.db12.game.chessit.client.online;
 import com.allen_sauer.gwt.dnd.client.PickupDragController;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.EventBus;
-import com.gwtplatform.mvp.client.PresenterImpl;
+import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -24,7 +24,7 @@ import de.db12.game.chessit.client.online.model.InPlace;
 import de.db12.game.chessit.client.online.model.Place;
 import de.db12.game.chessit.client.online.model.Stone;
 
-public class BoardPresenter extends PresenterImpl<BoardPresenter.MyView, BoardPresenter.MyProxy> implements
+public class BoardPresenter extends Presenter<BoardPresenter.MyView, BoardPresenter.MyProxy> implements
         MoveStoneEventHandler {
     public enum Player {
         white, black, none
@@ -78,14 +78,14 @@ public class BoardPresenter extends PresenterImpl<BoardPresenter.MyView, BoardPr
     public BoardPresenter(EventBus eventBus, MyView view, MyProxy proxy) {
         super(eventBus, view, proxy);
         model = new BoardModel(30);
-        dragController = new PickupDragController(view.getBoard(), false);
+        dragController = new PickupDragController(getView().getBoard(), false);
         refreshView();
         eventBus.addHandler(MoveStoneEvent.getType(), this);
     }
 
     @Override
     protected void revealInParent() {
-        RevealRootContentEvent.fire(eventBus, this);
+        RevealRootContentEvent.fire(this, this);
     }
 
     private void refreshView() {
@@ -106,15 +106,15 @@ public class BoardPresenter extends PresenterImpl<BoardPresenter.MyView, BoardPr
     }
 
     private void refreshDrop() {
-        view.getWhiteDrop().clear();
+        getView().getWhiteDrop().clear();
         for (int i = 0; i < model.getwDrop().size(); i++) {
             StoneView stoneview = new StoneView(new InPlace(i, model.getwDrop().get(i)), 50);
-            view.getWhiteDrop().add(stoneview);
+			getView().getWhiteDrop().add(stoneview);
         }
-        view.getBlackDrop().clear();
+        getView().getBlackDrop().clear();
         for (int i = 0; i < model.getbDrop().size(); i++) {
             StoneView stoneview = new StoneView(new InPlace(i, model.getbDrop().get(i)), 50);
-            view.getBlackDrop().add(stoneview);
+            getView().getBlackDrop().add(stoneview);
         }
     }
 
@@ -133,8 +133,8 @@ public class BoardPresenter extends PresenterImpl<BoardPresenter.MyView, BoardPr
             StoneView stone = new StoneView(field, pxsize);
             int xpos = field.getX() - model.getBoard().getXOffset();
             int ypos = field.getY() - model.getBoard().getYOffset();
-            view.getBoard().add(stone, 20 + pxsize * xpos, pxsize * ypos);
-            dragController.registerDropController(new FieldDropController(eventBus, stone));
+            getView().getBoard().add(stone, 20 + pxsize * xpos, pxsize * ypos);
+            dragController.registerDropController(new FieldDropController(getEventBus(), stone));
             if (field.getStone().getPlayer() == Player.white && model.getState() == State.whitedraw)
                 dragController.makeDraggable(stone);
             if (field.getStone().getPlayer() == Player.black && model.getState() == State.blackdraw)
@@ -143,26 +143,26 @@ public class BoardPresenter extends PresenterImpl<BoardPresenter.MyView, BoardPr
     }
 
     private void refreshHands() {
-        view.getWhiteHand().clear();
-        view.getWhiteHand().add(new Label("White"));
+        getView().getWhiteHand().clear();
+        getView().getWhiteHand().add(new Label("White"));
         for (int i = 0; i < Math.min(model.getWHand().size(), 3); i++) {
             StoneView stoneview = new StoneView(new InPlace(i, model.getWHand().get(i)), 50);
-            view.getWhiteHand().add(stoneview);
+            getView().getWhiteHand().add(stoneview);
             if (model.getState() == State.whiteset)
                 dragController.makeDraggable(stoneview);
         }
-        view.getBlackHand().clear();
-        view.getWhiteHand().add(new Label("Black"));
+        getView().getBlackHand().clear();
+        getView().getWhiteHand().add(new Label("Black"));
         for (int i = 0; i < Math.min(model.getBHand().size(), 3); i++) {
             StoneView stoneview = new StoneView(new InPlace(i, model.getBHand().get(i)), 50);
-            view.getBlackHand().add(stoneview);
+            getView().getBlackHand().add(stoneview);
             if (model.getState() == State.blackset)
                 dragController.makeDraggable(stoneview);
         }
     }
 
     private void showHelp() {
-        view.getHelp().clear();
+        getView().getHelp().clear();
         String text;
         switch (model.getState()) {
         case whitedraw:
@@ -182,7 +182,7 @@ public class BoardPresenter extends PresenterImpl<BoardPresenter.MyView, BoardPr
             text = "";
             break;
         }
-        view.getHelp().add(new Label(text));
+        getView().getHelp().add(new Label(text));
         if (model.getState() == State.blackset || model.getState() == State.whiteset) {
             Button jump = new Button("ignore set");
             jump.addClickHandler(new ClickHandler() {
@@ -192,13 +192,13 @@ public class BoardPresenter extends PresenterImpl<BoardPresenter.MyView, BoardPr
                     refreshView();
                 }
             });
-            view.getHelp().add(jump);
+            getView().getHelp().add(jump);
         }
     }
 
     private void clearBoard() {
-        dragController.unregisterDropControllers();
-        view.getBoard().clear();
+//        dragController.unregisterDropControllers();
+        getView().getBoard().clear();
     }
 
     public void moveStone(Place origin, Stone stone, Place place) {
