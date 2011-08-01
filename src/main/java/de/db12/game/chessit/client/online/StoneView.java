@@ -4,8 +4,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.DataResource;
 import com.google.gwt.user.client.ui.Image;
 
-import de.db12.game.chessit.client.online.model.Place;
-import de.db12.game.chessit.client.online.model.Stone;
+import de.db12.game.chessit.shared.model.Place;
+import de.db12.game.chessit.shared.model.Stone;
 
 public class StoneView extends Image {
 

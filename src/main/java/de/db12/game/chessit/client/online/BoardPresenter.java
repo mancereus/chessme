@@ -18,11 +18,11 @@ import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 
 import de.db12.game.chessit.client.event.MoveStoneEvent;
 import de.db12.game.chessit.client.event.MoveStoneEventHandler;
-import de.db12.game.chessit.client.online.model.BoardModel;
-import de.db12.game.chessit.client.online.model.Field;
-import de.db12.game.chessit.client.online.model.InPlace;
-import de.db12.game.chessit.client.online.model.Place;
-import de.db12.game.chessit.client.online.model.Stone;
+import de.db12.game.chessit.shared.model.BoardModel;
+import de.db12.game.chessit.shared.model.Field;
+import de.db12.game.chessit.shared.model.InPlace;
+import de.db12.game.chessit.shared.model.Place;
+import de.db12.game.chessit.shared.model.Stone;
 
 public class BoardPresenter extends Presenter<BoardPresenter.MyView, BoardPresenter.MyProxy> implements
         MoveStoneEventHandler {

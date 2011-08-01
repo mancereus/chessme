@@ -1,4 +1,4 @@
-package de.db12.game.chessit.client.online.model;
+package de.db12.game.chessit.shared.model;
 
 public class InPlace implements Place {
     private Stone stone;

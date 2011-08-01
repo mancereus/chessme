@@ -1,4 +1,4 @@
-package de.db12.game.chessit.client.online.model;
+package de.db12.game.chessit.shared.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import de.db12.game.chessit.client.online.BoardPresenter.Player;
-import de.db12.game.chessit.client.online.model.Stone.Type;
+import de.db12.game.chessit.shared.model.Stone.Type;
 
 public class Board {
     Map<Integer, Field> fields = new HashMap<Integer, Field>();
