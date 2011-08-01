@@ -1,0 +1,39 @@
+<project name="schachen" default="dist" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<!--    <property name="java-build.src-dir" location="src"/> -->
+	<property name="asl.dir" value="config/asl" />
+	<property name="repo-ivy.retrieve-pattern" value="${repo-ivy.lib-dir}/[conf]/[artifact]-[revision](-[classifier]).[ext]" />
+	<property name="repo-ivy.settings-file" value="./ivysettings.xml" />
+
+	<import file="${asl.dir}/asl-repo-ivy.xml" />
+	<import file="${asl.dir}/asl-java-build.xml" /> 
+	<import file="${asl.dir}/asl-java-test.xml" />
+	<import file="${asl.dir}/asl-java-report.xml" />
+	<import file="${asl.dir}/asl-java-package.xml" />
+	<import file="${asl.dir}/asl-java-war.xml" />
+
+	<target name="check.hsql">
+		<condition property="hsql.running">
+			<socket server="localhost" port="9001" />
+		</condition>
+	</target>
+
+	<target name="db-start" unless="hsql.running" depends="check.hsql">
+		<exec executable="cmd"  spawn="true" osfamily="Windows" dir="data">
+		    <arg line='/c start "Hsql DB" /min cmd /K java -cp ../lib/runtime/hsqldb-2.0.0.jar -Xmx512m org.hsqldb.Server'/>
+		  </exec>
+		<exec executable="java"  spawn="true" osfamily="unix" dir="data">
+		   <arg line='-cp hsqldb.jar -Xmx512m org.hsqldb.Server'/>
+		</exec>
+	</target>
+
+	<target name="db-stop" if="hsql.running" depends="check.hsql" >
+		<exec executable="taskkill" spawn="true" osfamily="windows">
+			<arg line='/FI "WINDOWTITLE eq Hsql DB - *"'/>
+		</exec>
+		<exec executable="java"  spawn="true" osfamily="unix" dir="${foundation.dir}/data">
+			<arg line="-cp ../lib/runtime/hsqldb-2.0.0.jar org.hsqldb.util.SqlTool --inlineRc URL=jdbc:hsqldb:hsql://localhost/test-db,USER=sa,password= --sql 'SHUTDOWN;'"/>
+        	</exec>
+
+	</target>
+
+</project>

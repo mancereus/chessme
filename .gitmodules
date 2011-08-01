@@ -1,0 +1,3 @@
+[submodule "config/asl"]
+	path = config/asl
+	url = git@github.com:mancereus/asl.git
