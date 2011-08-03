@@ -2,6 +2,7 @@ package de.db12.game.chessit.shared.game;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -23,6 +24,13 @@ public class ChessMePlayer implements Player {
 		this.color = color;
 		this.board = board;
 		stack = Stone.getAllStones(color);
+	}
+
+	private BoardField getFieldWithStoneToMove() {
+		List<BoardField> fields = board.getFieldsWithStones(color);
+		if (fields.isEmpty())
+			return null;
+		return fields.get(random.nextInt(fields.size()));
 	}
 
 	@Override
@@ -50,6 +58,13 @@ public class ChessMePlayer implements Player {
 
 	@Override
 	public void move() {
+		BoardField field = getFieldWithStoneToMove();
+		Set<BoardField> targets = field.getMovableFields();
+		if (targets.isEmpty())
+			return;
+		BoardField target = targets.iterator().next();
+		target.setStone(field.getStone());
+		field.setStone(null);
 
 	}
 

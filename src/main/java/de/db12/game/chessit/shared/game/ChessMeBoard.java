@@ -1,9 +1,12 @@
 package de.db12.game.chessit.shared.game;
 
+import java.util.List;
 import java.util.Set;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import de.db12.game.chessit.shared.game.ChessMeGame.Color;
 import de.db12.game.chessit.shared.game.ChessMeGame.Stone;
 
 public class ChessMeBoard implements Board {
@@ -57,9 +60,18 @@ public class ChessMeBoard implements Board {
 
 	protected BoardField[] fields;
 
-	private BoardField getField(int x, int y) {
+	public BoardField getField(int x, int y) {
 		return fields[y * boardsize + x];
 
+	}
+
+	public List<BoardField> getFieldsWithStones(Color color) {
+		List<BoardField> ret = Lists.newArrayList();
+		for (BoardField field : fields) {
+			if (!field.isEmpty() && field.getStone().color == color)
+				ret.add(field);
+		}
+		return ret;
 	}
 
 	@Override

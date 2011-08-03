@@ -1,5 +1,8 @@
 package de.db12.game.chessit.shared.game;
 
+import java.util.List;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,13 +12,13 @@ public class BoardField {
 	private static final Logger log = LoggerFactory.getLogger("cf");
 
 	private Stone stone;
-	private Board board;
+	private ChessMeBoard board;
 
 	private int y;
 
 	private int x;
 
-	public BoardField(Board board, int x, int y) {
+	public BoardField(ChessMeBoard board, int x, int y) {
 		this.board = board;
 		this.x = x;
 		this.y = y;
@@ -23,6 +26,16 @@ public class BoardField {
 
 	public Board getBoard() {
 		return board;
+	}
+
+	public Set<BoardField> getMovableFields() {
+		Set<BoardField> targets = board.getFreeFields();
+		if (isEmpty())
+			return targets;
+		List<BoardField> moves = getStone().type.getFields(board, this,
+				getStone().color.dir());
+		targets.retainAll(moves);
+		return targets;
 	}
 
 	public Stone getStone() {
@@ -41,7 +54,7 @@ public class BoardField {
 		return stone == null;
 	}
 
-	public void setBoard(Board board) {
+	public void setBoard(ChessMeBoard board) {
 		this.board = board;
 	}
 
