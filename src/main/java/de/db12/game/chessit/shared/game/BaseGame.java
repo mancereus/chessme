@@ -20,12 +20,26 @@ public abstract class BaseGame implements Game {
 		this.board = board;
 		this.players = players;
 	}
-	@Override
-	public abstract void init();
-	@Override
-	public abstract boolean isFinished();
+
 	@Override
 	public abstract void finish();
+
+	@Override
+	public abstract void init();
+
+	@Override
+	public abstract boolean isFinished();
+
+	private void playRound() {
+		while (!isFinished()) {
+			for (Player player : players) {
+				player.move();
+				if (isFinished())
+					break;
+			}
+		}
+		round++;
+	}
 
 	@Override
 	public void start() {
@@ -34,16 +48,5 @@ public abstract class BaseGame implements Game {
 			playRound();
 		}
 		finish();
-	}
-
-	private void playRound() {
-		while (!isFinished()) {
-				for (Player player : players) {
-					player.move(board);
-					if (isFinished())
-						break;
-				}
-		}
-		round++;
 	}
 }

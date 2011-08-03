@@ -1,0 +1,132 @@
+<class-diagram version="1.0.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <interface id="1" corner="BOTTOM_RIGHT" language="java" name="de.db12.game.chessit.shared.game.Board" 
+    project="chessit" file="/chessit/src/main/java/de/db12/game/chessit/shared/game/Board.java" binary="false">    
+    <position height="-1" width="-1" x="286" y="463"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="de.db12.game.chessit.shared.game.BoardField" 
+    project="chessit" file="/chessit/src/main/java/de/db12/game/chessit/shared/game/BoardField.java" binary="false">    
+    <position height="-1" width="-1" x="289" y="658"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface id="3" corner="BOTTOM_RIGHT" language="java" name="de.db12.game.chessit.shared.game.Game" project="chessit" 
+    file="/chessit/src/main/java/de/db12/game/chessit/shared/game/Game.java" binary="false">    
+    <position height="-1" width="-1" x="761" y="245"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <enumeration id="5" corner="BOTTOM_RIGHT" language="java" name="de.db12.game.chessit.shared.game.ChessMeGame.Stone" 
+    project="chessit" file="/chessit/src/main/java/de/db12/game/chessit/shared/game/ChessMeGame.java" binary="false">    
+    <position height="-1" width="-1" x="575" y="692"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="6" corner="BOTTOM_RIGHT" language="java" name="de.db12.game.chessit.shared.game.ChessMeGame.Type" 
+    project="chessit" file="/chessit/src/main/java/de/db12/game/chessit/shared/game/ChessMeGame.java" binary="false">    
+    <position height="-1" width="-1" x="739" y="866"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </enumeration>  
+  <interface id="8" corner="BOTTOM_RIGHT" language="java" name="de.db12.game.chessit.shared.game.Player" 
+    project="chessit" file="/chessit/src/main/java/de/db12/game/chessit/shared/game/Player.java" binary="false">    
+    <position height="-1" width="-1" x="758" y="478"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="10" corner="BOTTOM_RIGHT" language="java" name="de.db12.game.chessit.shared.game.GameRound" 
+    project="chessit" file="/chessit/src/main/java/de/db12/game/chessit/shared/game/GameRound.java" binary="false">    
+    <position height="-1" width="-1" x="960" y="252"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="11" corner="BOTTOM_RIGHT" language="java" name="de.db12.game.chessit.shared.game.ChessMeGame.Color" 
+    project="chessit" file="/chessit/src/main/java/de/db12/game/chessit/shared/game/ChessMeGame.java" binary="false">    
+    <position height="-1" width="-1" x="548" y="836"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="12" corner="BOTTOM_RIGHT" language="java" name="de.db12.game.chessit.shared.game.BaseGame" 
+    project="chessit" file="/chessit/src/main/java/de/db12/game/chessit/shared/game/BaseGame.java" binary="false">    
+    <position height="-1" width="-1" x="557" y="332"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <association>    
+    <end type="SOURCE" nodeId="12" navigable="false">      
+      <attribute name="players"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" nodeId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="5" navigable="false">      
+      <attribute name="type"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="5" navigable="false">      
+      <attribute name="color"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="12" navigable="false">      
+      <attribute name="board"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="2" navigable="false">      
+      <attribute name="board"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization>    
+    <end type="SOURCE" nodeId="12"/>    
+    <end type="TARGET" nodeId="3"/>  
+  </realization>  
+  <association>    
+    <end type="SOURCE" nodeId="2" navigable="false">      
+      <attribute name="stone"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

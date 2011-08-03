@@ -1,61 +1,65 @@
 package de.db12.game.chessit.shared.game;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Lists;
+import de.db12.game.chessit.shared.game.ChessMeGame.Stone;
 
-import de.db12.game.chessit.shared.game.ChessMeGame.Card;
-
-public class BoardField  {
+public class BoardField {
 	private static final Logger log = LoggerFactory.getLogger("cf");
 
-	private Card card;
-	private List<BoardField> parents = Lists.newArrayList();
+	private Stone stone;
 	private Board board;
 
-	public Card getCard() {
-		return card;
+	private int y;
+
+	private int x;
+
+	public BoardField(Board board, int x, int y) {
+		this.board = board;
+		this.x = x;
+		this.y = y;
 	}
 
-	public BoardField(Board board) {
+	public Board getBoard() {
+		return board;
+	}
+
+	public Stone getStone() {
+		return stone;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public boolean isEmpty() {
+		return stone == null;
+	}
+
+	public void setBoard(Board board) {
 		this.board = board;
 	}
 
-	public boolean isFreeToUse() {
-		if (getCard() != null)
-			return false;
-		for (BoardField par : parents) {
-			if (par.getCard() == null)
-				return false;
-		}
-		return true;
+	public void setStone(Stone stone) {
+		this.stone = stone;
 	}
 
-	public void setCard(Card card) {
-		this.card = card;
+	public void setX(int x) {
+		this.x = x;
 	}
 
-	public void addParent(BoardField cardField) {
-		if (cardField == null)
-			return;
-		parents.add(cardField);
-
+	public void setY(int y) {
+		this.y = y;
 	}
 
 	@Override
 	public String toString() {
-		if (getCard() == null)
-			return "...";
-		return getCard().toString();
+		return isEmpty() ? "__" : getStone().color.desc()
+				+ getStone().type.desc();
 	}
-
-	public List<BoardField> getParents() {
-		return parents;
-
-	}
-
-
 }
