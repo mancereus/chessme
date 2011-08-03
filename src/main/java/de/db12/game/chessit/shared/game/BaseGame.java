@@ -28,22 +28,29 @@ public abstract class BaseGame implements Game {
 	public abstract void init();
 
 	@Override
+	public void initRound() {
+		round++;
+		board.initRound();
+		for (Player player : players) {
+			player.initRound();
+		}
+	}
+
+	@Override
 	public abstract boolean isFinished();
 
 	private void playRound() {
-		while (!isFinished()) {
-			for (Player player : players) {
-				player.move();
-				if (isFinished())
-					break;
-			}
+		initRound();
+		for (Player player : players) {
+			player.move();
+			if (isFinished())
+				break;
+			log.info(toString());
 		}
-		round++;
 	}
 
 	@Override
 	public void start() {
-		init();
 		while (!isFinished()) {
 			playRound();
 		}

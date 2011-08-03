@@ -1,7 +1,9 @@
 package de.db12.game.chessit.shared.game;
 
 import java.util.List;
+import java.util.Random;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
 import de.db12.game.chessit.shared.game.ChessMeGame.Color;
@@ -9,10 +11,11 @@ import de.db12.game.chessit.shared.game.ChessMeGame.Stone;
 import de.db12.game.chessit.shared.game.ChessMeGame.Type;
 
 public class ChessMePlayer implements Player {
+	private final static Random random = new Random();
 
 	private final Color color;
-	private final Iterable<Stone> hand = Lists.newArrayList();
-	private final Iterable<Stone> trash = Lists.newArrayList();
+	private final List<Stone> hand = Lists.newArrayList();
+	private final List<Stone> trash = Lists.newArrayList();
 	private List<Stone> stack = Lists.newArrayList();
 	private final ChessMeBoard board;
 
@@ -24,31 +27,36 @@ public class ChessMePlayer implements Player {
 
 	@Override
 	public void init() {
-		int dirY = -1;
-		if (color == Color.white)
-			dirY = 1;
-		board.setStone(board.getMiddleX(), board.getMiddleY() + dirY * 2,
+		int modYpawn = color == Color.white ? 2 : -1;
+		int modYking = color == Color.white ? 3 : -2;
+		board.setStone(board.getMiddleX(), board.getMiddleY() + modYking,
 				takeStone(Type.king));
-		board.setStone(board.getMiddleX() - 1, board.getMiddleY() + dirY,
+		board.setStone(board.getMiddleX() - 1, board.getMiddleY() + modYpawn,
 				takeStone(Type.pawn));
-		board.setStone(board.getMiddleX(), board.getMiddleY() + dirY,
+		board.setStone(board.getMiddleX(), board.getMiddleY() + modYpawn,
 				takeStone(Type.pawn));
-		board.setStone(board.getMiddleX() + 1, board.getMiddleY() + dirY,
+		board.setStone(board.getMiddleX() + 1, board.getMiddleY() + modYpawn,
 				takeStone(Type.pawn));
-		board.setStone(board.getMiddleX() + 2, board.getMiddleY() + dirY,
+		board.setStone(board.getMiddleX() + 2, board.getMiddleY() + modYpawn,
 				takeStone(Type.pawn));
 	}
 
 	@Override
-	public void initRound(int round, int minVal) {
-		// TODO Auto-generated method stub
-
+	public void initRound() {
+		while (!stack.isEmpty() && hand.size() < 3) {
+			hand.add(stack.remove(random.nextInt(stack.size())));
+		}
 	}
 
 	@Override
 	public void move() {
-		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public String showHand() {
+		return color.desc() + "(" + stack.size() + "): "
+				+ Joiner.on(" ").join(hand).toString();
 	}
 
 	@Override

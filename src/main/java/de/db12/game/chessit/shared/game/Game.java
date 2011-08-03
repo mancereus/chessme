@@ -1,18 +1,14 @@
 package de.db12.game.chessit.shared.game;
 
-import java.util.List;
-
 public interface Game {
+	void finish();
+
 	void init();
 
-	void start();
-
-//	void getRound();
+	void initRound();
 
 	boolean isFinished();
 
-	void finish();
-
-	List<Player> getSpieler();
+	void start();
 
 }

@@ -1,11 +1,13 @@
 package de.db12.game.chessit.shared.game;
 
-import java.util.List;
+import java.util.Set;
 
 public interface Board {
 
-	List<BoardField> getFreeFields();
+	Set<BoardField> getFreeFields();
 
 	void init();
+
+	void initRound();
 
 }

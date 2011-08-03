@@ -62,10 +62,15 @@ public class ChessMeGame extends BaseGame {
 			this.color = color;
 			this.type = type;
 		}
+
+		@Override
+		public String toString() {
+			return color.desc() + type.desc();
+		}
 	}
 
 	public enum Type {
-		king("k"), queen("k"), pawn("p"), rook("r"), bishop("b"), horse("h");
+		king("k"), queen("q"), pawn("p"), rook("r"), bishop("b"), horse("h");
 
 		private String desc;
 
@@ -87,8 +92,7 @@ public class ChessMeGame extends BaseGame {
 		players.add(new ChessMePlayer(Color.black, board));
 		ChessMeGame game = new ChessMeGame(board, players);
 		game.init();
-		log.info(board.toString());
-
+		game.start();
 	}
 
 	public ChessMeGame(Board board, List<Player> players) {
@@ -97,14 +101,8 @@ public class ChessMeGame extends BaseGame {
 
 	@Override
 	public void finish() {
-		// TODO Auto-generated method stub
+		log.info(toString());
 
-	}
-
-	@Override
-	public List<Player> getSpieler() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -117,8 +115,13 @@ public class ChessMeGame extends BaseGame {
 
 	@Override
 	public boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+		return round > 100;
 	}
 
+	@Override
+	public String toString() {
+		return board.toString() + "\nround: " + round + "\n"
+				+ players.get(0).showHand() + "    "
+				+ players.get(1).showHand();
+	}
 }

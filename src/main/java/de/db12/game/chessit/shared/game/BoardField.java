@@ -59,7 +59,6 @@ public class BoardField {
 
 	@Override
 	public String toString() {
-		return isEmpty() ? "__" : getStone().color.desc()
-				+ getStone().type.desc();
+		return isEmpty() ? ".." : getStone().toString();
 	}
 }
