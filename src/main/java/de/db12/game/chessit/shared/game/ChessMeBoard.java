@@ -22,7 +22,7 @@ public class ChessMeBoard implements Board {
 
 		public View(ChessMeBoard board) {
 			this.board = board;
-			Set<BoardField> freeFields = board.getFreeFields();
+			Set<BoardField> freeFields = board.getReachableFields(null);
 			for (BoardField ff : freeFields) {
 				if (ff.getX() < minx)
 					minx = ff.getX();
@@ -44,14 +44,13 @@ public class ChessMeBoard implements Board {
 						|| i / board.boardsize > maxy) {
 					continue;
 				}
-				if (i % board.boardsize > maxx) {
+				if (i % board.boardsize > maxx || i % board.boardsize == 0) {
 					buf.append("\n");
 					continue;
 				}
-				if (i % board.boardsize == 0)
-					buf.append("\n");
 				buf.append(board.fields[i].toString() + " ");
 			}
+			buf.append(board.comment);
 			return buf.toString();
 		}
 	}
@@ -60,9 +59,27 @@ public class ChessMeBoard implements Board {
 
 	protected BoardField[] fields;
 
+	private String comment;
+
+	private int dec(int val) {
+		return Math.max(0, val - 1);
+	}
+
+	private int inc(int val) {
+		return Math.min(boardsize - 1, val + 1);
+	}
+
 	public BoardField getField(int x, int y) {
 		return fields[y * boardsize + x];
 
+	}
+
+	public void addCheckField(Set<BoardField> ff, Color color, int x, int y) {
+		BoardField field = getField(x, y);
+		if (!field.isEmpty() && field.getStone().color == color)
+			return;
+		field.setReachable(true);
+		ff.add(field);
 	}
 
 	public List<BoardField> getFieldsWithStones(Color color) {
@@ -74,27 +91,35 @@ public class ChessMeBoard implements Board {
 		return ret;
 	}
 
-	@Override
-	public Set<BoardField> getFreeFields() {
-		Set<BoardField> ffs = Sets.newHashSet();
-		for (BoardField f : fields) {
-			if (f.isEmpty())
-				continue;
-			ffs.add(getField(f.getX(), f.getY()));
-			ffs.add(getField(Math.max(0, f.getX() - 1), f.getY()));
-			ffs.add(getField(f.getX(), Math.max(0, f.getY() - 1)));
-			ffs.add(getField(Math.min(boardsize - 1, f.getX() + 1), f.getY()));
-			ffs.add(getField(f.getX(), Math.min(boardsize - 1, f.getY() + 1)));
-		}
-		return ffs;
-	}
-
 	public int getMiddleX() {
 		return boardsize / 2;
 	}
 
 	public int getMiddleY() {
 		return boardsize / 2;
+	}
+
+	@Override
+	public Set<BoardField> getReachableFields(Color color) {
+		Set<BoardField> ffs = Sets.newHashSet();
+		for (BoardField f : fields) {
+			f.setReachable(false);
+		}
+		for (BoardField f : fields) {
+			if (f.isEmpty())
+				continue;
+			addCheckField(ffs, color, f.getX(), f.getY());
+			addCheckField(ffs, color, dec(f.getX()), dec(f.getY()));
+			addCheckField(ffs, color, dec(f.getX()), f.getY());
+			addCheckField(ffs, color, dec(f.getX()), inc(f.getY()));
+			addCheckField(ffs, color, f.getX(), dec(f.getY()));
+			addCheckField(ffs, color, f.getX(), f.getY());
+			addCheckField(ffs, color, f.getX(), inc(f.getY()));
+			addCheckField(ffs, color, inc(f.getX()), dec(f.getY()));
+			addCheckField(ffs, color, inc(f.getX()), f.getY());
+			addCheckField(ffs, color, inc(f.getX()), inc(f.getY()));
+		}
+		return ffs;
 	}
 
 	@Override
@@ -124,5 +149,13 @@ public class ChessMeBoard implements Board {
 		// }
 		// return buf.toString();
 		return new View(this).toString();
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getComment() {
+		return comment;
 	}
 }

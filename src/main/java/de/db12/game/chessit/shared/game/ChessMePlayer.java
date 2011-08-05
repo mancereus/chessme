@@ -59,13 +59,22 @@ public class ChessMePlayer implements Player {
 	@Override
 	public void move() {
 		BoardField field = getFieldWithStoneToMove();
-		Set<BoardField> targets = field.getMovableFields();
+		Set<BoardField> targets = field.getMovableFields(color);
 		if (targets.isEmpty())
 			return;
 		BoardField target = targets.iterator().next();
+		moveFromTo(field, target);
+
+	}
+
+	private void moveFromTo(BoardField field, BoardField target) {
+		if (target.isEmpty())
+			board.setComment("");
+		else
+			board.setComment(field.getStone().toString() + " kills "
+					+ target.getStone().toString());
 		target.setStone(field.getStone());
 		field.setStone(null);
-
 	}
 
 	@Override
