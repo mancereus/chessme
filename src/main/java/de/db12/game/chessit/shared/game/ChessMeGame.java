@@ -29,31 +29,24 @@ public class ChessMeGame extends BaseGame {
 	}
 
 	public enum Stone {
-		whiteking(Color.white, Type.king), whitequeen(Color.white, Type.queen), whitepawn1(
-				Color.white, Type.pawn), whitepawn2(Color.white, Type.pawn), whitepawn3(
-				Color.white, Type.pawn), whitepawn4(Color.white, Type.pawn), whitepawn5(
-				Color.white, Type.pawn), whitepawn6(Color.white, Type.pawn), whitepawn7(
-				Color.white, Type.pawn), whitepawn8(Color.white, Type.pawn), whiterook1(
-				Color.white, Type.rook), whiterook2(Color.white, Type.rook), whitebishop1(
-				Color.white, Type.bishop), whitebishop2(Color.white,
-				Type.bishop), whitehorse1(Color.white, Type.horse), whitehorse2(
-				Color.white, Type.horse), blackking(Color.black, Type.king), blackqueen(
-				Color.black, Type.queen), blackpawn1(Color.black, Type.pawn), blackpawn2(
-				Color.black, Type.pawn), blackpawn3(Color.black, Type.pawn), blackpawn4(
-				Color.black, Type.pawn), blackpawn5(Color.black, Type.pawn), blackpawn6(
-				Color.black, Type.pawn), blackpawn7(Color.black, Type.pawn), blackpawn8(
-				Color.black, Type.pawn), blackrook1(Color.black, Type.rook), blackrook2(
-				Color.black, Type.rook), blackbishop1(Color.black, Type.bishop), blackbishop2(
-				Color.black, Type.bishop), blackhorse1(Color.black, Type.horse), blackhorse2(
-				Color.black, Type.horse);
+		whiteking(Color.white, Type.king), whitequeen(Color.white, Type.queen), whitepawn1(Color.white, Type.pawn), whitepawn2(
+				Color.white, Type.pawn), whitepawn3(Color.white, Type.pawn), whitepawn4(Color.white, Type.pawn), whitepawn5(
+				Color.white, Type.pawn), whitepawn6(Color.white, Type.pawn), whitepawn7(Color.white, Type.pawn), whitepawn8(
+				Color.white, Type.pawn), whiterook1(Color.white, Type.rook), whiterook2(Color.white, Type.rook), whitebishop1(
+				Color.white, Type.bishop), whitebishop2(Color.white, Type.bishop), whitehorse1(Color.white, Type.horse), whitehorse2(
+				Color.white, Type.horse), blackking(Color.black, Type.king), blackqueen(Color.black, Type.queen), blackpawn1(
+				Color.black, Type.pawn), blackpawn2(Color.black, Type.pawn), blackpawn3(Color.black, Type.pawn), blackpawn4(
+				Color.black, Type.pawn), blackpawn5(Color.black, Type.pawn), blackpawn6(Color.black, Type.pawn), blackpawn7(
+				Color.black, Type.pawn), blackpawn8(Color.black, Type.pawn), blackrook1(Color.black, Type.rook), blackrook2(
+				Color.black, Type.rook), blackbishop1(Color.black, Type.bishop), blackbishop2(Color.black, Type.bishop), blackhorse1(
+				Color.black, Type.horse), blackhorse2(Color.black, Type.horse);
 		public static List<Stone> getAllStones(final Color color) {
-			Iterable<Stone> filter = Iterables.filter(Arrays.asList(values()),
-					new Predicate<Stone>() {
-						@Override
-						public boolean apply(Stone arg0) {
-							return arg0.color == color;
-						}
-					});
+			Iterable<Stone> filter = Iterables.filter(Arrays.asList(values()), new Predicate<Stone>() {
+				@Override
+				public boolean apply(Stone arg0) {
+					return arg0.color == color;
+				}
+			});
 
 			List<Stone> ret = new ArrayList<Stone>();
 			Iterables.addAll(ret, filter);
@@ -78,102 +71,86 @@ public class ChessMeGame extends BaseGame {
 	public enum Type {
 		king("k") {
 			@Override
-			public List<BoardField> getFields(ChessMeBoard board,
-					BoardField source, int dir) {
+			public List<BoardField> getFields(ChessMeBoard board, BoardField source, int dir) {
 				List<BoardField> targets = Lists.newArrayList();
-				targets.add(board.getField(source.getX() - 1, source.getY()));
-				targets.add(board.getField(source.getX() + 1, source.getY()));
-				targets.add(board.getField(source.getX() - 1, source.getY() + 1
-						* dir));
-				targets.add(board.getField(source.getX() + 1, source.getY() + 1
-						* dir));
-				targets.add(board.getField(source.getX() + 1, source.getY() + 1
-						* dir));
+				checkField(targets, board, source.getX() - 1, source.getY());
+				checkField(targets, board, source.getX() + 1, source.getY());
+				checkField(targets, board, source.getX() - 1, source.getY() + dir);
+				checkField(targets, board, source.getX() + 1, source.getY() + dir);
+				checkField(targets, board, source.getX(), source.getY() + dir);
 				return targets;
 			}
 
 		},
 		queen("q") {
 			@Override
-			public List<BoardField> getFields(ChessMeBoard board,
-					BoardField source, int dir) {
+			public List<BoardField> getFields(ChessMeBoard board, BoardField source, int dir) {
 				List<BoardField> targets = Lists.newArrayList();
-				targets.add(board.getField(source.getX() - 1, source.getY()));
-				targets.add(board.getField(source.getX() + 1, source.getY()));
-				targets.add(board.getField(source.getX() - 1, source.getY() + 1
-						* dir));
-				targets.add(board.getField(source.getX() + 1, source.getY() + 1
-						* dir));
-				targets.add(board.getField(source.getX() + 1, source.getY() + 1
-						* dir));
+				for (int i = 0; i < 4; i++) {
+					checkField(targets, board, source.getX() - i, source.getY() - i);
+					checkField(targets, board, source.getX() - i, source.getY());
+					checkField(targets, board, source.getX() - i, source.getY() + i);
+					checkField(targets, board, source.getX(), source.getY() - i);
+					checkField(targets, board, source.getX(), source.getY() + i);
+					checkField(targets, board, source.getX() + i, source.getY() - i);
+					checkField(targets, board, source.getX() + i, source.getY());
+					checkField(targets, board, source.getX() + i, source.getY() + i);
+				}
 				return targets;
 			}
 
 		},
 		pawn("p") {
 			@Override
-			public List<BoardField> getFields(ChessMeBoard board,
-					BoardField source, int dir) {
+			public List<BoardField> getFields(ChessMeBoard board, BoardField source, int dir) {
 				List<BoardField> targets = Lists.newArrayList();
-				targets.add(board.getField(source.getX() - 1, source.getY()));
-				targets.add(board.getField(source.getX() + 1, source.getY()));
-				targets.add(board.getField(source.getX() - 1, source.getY() + 1
-						* dir));
-				targets.add(board.getField(source.getX() + 1, source.getY() + 1
-						* dir));
-				targets.add(board.getField(source.getX() + 1, source.getY() + 1
-						* dir));
+				checkField(targets, board, source.getX() - 1, source.getY() + dir);
+				checkField(targets, board, source.getX() + 1, source.getY() + dir);
+				checkField(targets, board, source.getX(), source.getY() + dir);
 				return targets;
 			}
 
 		},
 		rook("r") {
 			@Override
-			public List<BoardField> getFields(ChessMeBoard board,
-					BoardField source, int dir) {
+			public List<BoardField> getFields(ChessMeBoard board, BoardField source, int dir) {
 				List<BoardField> targets = Lists.newArrayList();
-				targets.add(board.getField(source.getX() - 1, source.getY()));
-				targets.add(board.getField(source.getX() + 1, source.getY()));
-				targets.add(board.getField(source.getX() - 1, source.getY() + 1
-						* dir));
-				targets.add(board.getField(source.getX() + 1, source.getY() + 1
-						* dir));
-				targets.add(board.getField(source.getX() + 1, source.getY() + 1
-						* dir));
+				for (int i = 0; i < 4; i++) {
+					checkField(targets, board, source.getX() - i, source.getY());
+					checkField(targets, board, source.getX(), source.getY() - i);
+					checkField(targets, board, source.getX(), source.getY() + i);
+					checkField(targets, board, source.getX() + i, source.getY());
+				}
 				return targets;
 			}
 
 		},
 		bishop("b") {
 			@Override
-			public List<BoardField> getFields(ChessMeBoard board,
-					BoardField source, int dir) {
+			public List<BoardField> getFields(ChessMeBoard board, BoardField source, int dir) {
 				List<BoardField> targets = Lists.newArrayList();
-				targets.add(board.getField(source.getX() - 1, source.getY()));
-				targets.add(board.getField(source.getX() + 1, source.getY()));
-				targets.add(board.getField(source.getX() - 1, source.getY() + 1
-						* dir));
-				targets.add(board.getField(source.getX() + 1, source.getY() + 1
-						* dir));
-				targets.add(board.getField(source.getX() + 1, source.getY() + 1
-						* dir));
+				for (int i = 0; i < 4; i++) {
+					checkField(targets, board, source.getX() - i, source.getY() - i);
+					checkField(targets, board, source.getX() - i, source.getY() + i);
+					checkField(targets, board, source.getX() + i, source.getY() - i);
+					checkField(targets, board, source.getX() + i, source.getY() + i);
+				}
 				return targets;
 			}
 
 		},
 		horse("h") {
 			@Override
-			public List<BoardField> getFields(ChessMeBoard board,
-					BoardField source, int dir) {
+			public List<BoardField> getFields(ChessMeBoard board, BoardField source, int dir) {
 				List<BoardField> targets = Lists.newArrayList();
-				targets.add(board.getField(source.getX() - 1, source.getY()));
-				targets.add(board.getField(source.getX() + 1, source.getY()));
-				targets.add(board.getField(source.getX() - 1, source.getY() + 1
-						* dir));
-				targets.add(board.getField(source.getX() + 1, source.getY() + 1
-						* dir));
-				targets.add(board.getField(source.getX() + 1, source.getY() + 1
-						* dir));
+				targets.add(board.getField(source.getX() - 2, source.getY() + 1));
+				targets.add(board.getField(source.getX() - 2, source.getY() - 1));
+				targets.add(board.getField(source.getX() + 2, source.getY() + 1));
+				targets.add(board.getField(source.getX() + 2, source.getY() - 1));
+				targets.add(board.getField(source.getX() - 1, source.getY() + 2));
+				targets.add(board.getField(source.getX() - 1, source.getY() - 2));
+				targets.add(board.getField(source.getX() + 1, source.getY() + 2));
+				targets.add(board.getField(source.getX() + 1, source.getY() - 2));
 				return targets;
 			}
 
@@ -185,12 +162,20 @@ public class ChessMeGame extends BaseGame {
 			this.desc = desc;
 		}
 
+		protected void checkField(List<BoardField> targets, ChessMeBoard board, int x, int y) {
+			if (x < 0 || x >= board.boardsize || y < 0 || y >= board.boardsize)
+				return;
+			BoardField field = board.getField(x, y);
+			if (field.isReachable())
+				targets.add(field);
+
+		}
+
 		public String desc() {
 			return desc;
 		}
 
-		public List<BoardField> getFields(ChessMeBoard board,
-				BoardField boardField, int dir) {
+		public List<BoardField> getFields(ChessMeBoard board, BoardField boardField, int dir) {
 			List<BoardField> targets = Lists.newArrayList();
 
 			return targets;
@@ -234,8 +219,7 @@ public class ChessMeGame extends BaseGame {
 
 	@Override
 	public String toString() {
-		return board.toString() + "\nround: " + round + "\n"
-				+ players.get(0).showHand() + "    "
+		return board.toString() + "\nround: " + round + "\n" + players.get(0).showHand() + "    "
 				+ players.get(1).showHand();
 	}
 }

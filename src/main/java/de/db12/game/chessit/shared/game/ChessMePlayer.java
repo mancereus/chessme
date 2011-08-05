@@ -37,16 +37,11 @@ public class ChessMePlayer implements Player {
 	public void init() {
 		int modYpawn = color == Color.white ? 2 : -1;
 		int modYking = color == Color.white ? 3 : -2;
-		board.setStone(board.getMiddleX(), board.getMiddleY() + modYking,
-				takeStone(Type.king));
-		board.setStone(board.getMiddleX() - 1, board.getMiddleY() + modYpawn,
-				takeStone(Type.pawn));
-		board.setStone(board.getMiddleX(), board.getMiddleY() + modYpawn,
-				takeStone(Type.pawn));
-		board.setStone(board.getMiddleX() + 1, board.getMiddleY() + modYpawn,
-				takeStone(Type.pawn));
-		board.setStone(board.getMiddleX() + 2, board.getMiddleY() + modYpawn,
-				takeStone(Type.pawn));
+		board.setStone(board.getMiddleX(), board.getMiddleY() + modYking, takeStone(Type.king));
+		board.setStone(board.getMiddleX() - 1, board.getMiddleY() + modYpawn, takeStone(Type.pawn));
+		board.setStone(board.getMiddleX(), board.getMiddleY() + modYpawn, takeStone(Type.pawn));
+		board.setStone(board.getMiddleX() + 1, board.getMiddleY() + modYpawn, takeStone(Type.pawn));
+		board.setStone(board.getMiddleX() + 2, board.getMiddleY() + modYpawn, takeStone(Type.pawn));
 	}
 
 	@Override
@@ -69,18 +64,16 @@ public class ChessMePlayer implements Player {
 
 	private void moveFromTo(BoardField field, BoardField target) {
 		if (target.isEmpty())
-			board.setComment("");
+			board.setComment("move " + field.getStone().toString());
 		else
-			board.setComment(field.getStone().toString() + " kills "
-					+ target.getStone().toString());
+			board.setComment(field.getStone().toString() + " kills " + target.getStone().toString());
 		target.setStone(field.getStone());
 		field.setStone(null);
 	}
 
 	@Override
 	public String showHand() {
-		return color.desc() + "(" + stack.size() + "): "
-				+ Joiner.on(" ").join(hand).toString();
+		return color.desc() + "(" + stack.size() + "): " + Joiner.on(" ").join(hand).toString();
 	}
 
 	@Override
