@@ -15,6 +15,8 @@ public abstract class BaseGame implements Game {
 
 	protected int round = 0;
 
+	private boolean finished;
+
 	@Inject
 	public BaseGame(Board board, List<Player> players) {
 		this.board = board;
@@ -37,7 +39,14 @@ public abstract class BaseGame implements Game {
 	}
 
 	@Override
-	public abstract boolean isFinished();
+	public boolean isFinished() {
+		return finished;
+	}
+
+	@Override
+	public void setFinished() {
+		finished = true;
+	}
 
 	private void playRound() {
 		initRound();

@@ -65,10 +65,18 @@ public class ChessMePlayer implements Player {
 	private void moveFromTo(BoardField field, BoardField target) {
 		if (target.isEmpty())
 			board.setComment("move " + field.getStone().toString());
-		else
+		else {
 			board.setComment(field.getStone().toString() + " kills " + target.getStone().toString());
+			checkWin(target.getStone());
+		}
 		target.setStone(field.getStone());
 		field.setStone(null);
+	}
+
+	private void checkWin(Stone stone) {
+		if (stone.type == Type.king) {
+			board.getGame().setFinished();
+		}
 	}
 
 	@Override

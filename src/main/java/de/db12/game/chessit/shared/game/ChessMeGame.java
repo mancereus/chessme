@@ -194,8 +194,9 @@ public class ChessMeGame extends BaseGame {
 		game.start();
 	}
 
-	public ChessMeGame(Board board, List<Player> players) {
+	public ChessMeGame(ChessMeBoard board, List<Player> players) {
 		super(board, players);
+		board.setGame(this);
 	}
 
 	@Override
