@@ -6,6 +6,8 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gwt.thirdparty.guava.common.collect.Sets;
+
 import de.db12.game.chessit.shared.game.ChessMeGame.Color;
 import de.db12.game.chessit.shared.game.ChessMeGame.Stone;
 
@@ -15,16 +17,16 @@ public class BoardField {
 	private Stone stone;
 	private ChessMeBoard board;
 
-	private int y;
+	private int col;
 
-	private int x;
+	private int row;
 
 	private boolean reachable;
 
 	public BoardField(ChessMeBoard board, int x, int y) {
 		this.board = board;
-		this.x = x;
-		this.y = y;
+		this.row = x;
+		this.col = y;
 	}
 
 	public Board getBoard() {
@@ -32,25 +34,30 @@ public class BoardField {
 	}
 
 	public Set<BoardField> getMovableFields(Color color) {
-		Set<BoardField> targets = board.getReachableFields(color);
+		Set<BoardField> targets = board.getReachableFields();
 		if (isEmpty())
 			return targets;
-		List<BoardField> moves = getStone().type.getFields(board, this,
-				getStone().color.dir());
-		targets.retainAll(moves);
-		return targets;
+		List<BoardField> moves = getStone().type.getFields(board, this, getStone().color.dir());
+		Set<BoardField> ret = Sets.newHashSet();
+		for (BoardField boardField : targets) {
+			if (!boardField.isEmpty() && boardField.getStone().color == color)
+				continue;
+			if (moves.contains(boardField))
+				ret.add(boardField);
+		}
+		return ret;
 	}
 
 	public Stone getStone() {
 		return stone;
 	}
 
-	public int getX() {
-		return x;
+	public int getRow() {
+		return row;
 	}
 
-	public int getY() {
-		return y;
+	public int getCol() {
+		return col;
 	}
 
 	public boolean isEmpty() {
@@ -65,26 +72,25 @@ public class BoardField {
 		this.stone = stone;
 	}
 
-	public void setX(int x) {
-		this.x = x;
+	public void setRow(int row) {
+		this.row = row;
 	}
 
-	public void setY(int y) {
-		this.y = y;
+	public void setCol(int col) {
+		this.col = col;
 	}
 
 	@Override
 	public String toString() {
-		return isEmpty() ? (isReachable() ? ".." : "  ") : getStone()
-				.toString();
+		return isEmpty() ? (isReachable() ? ".." : "  ") : getStone().toString();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + x;
-		result = prime * result + y;
+		result = prime * result + row;
+		result = prime * result + col;
 		return result;
 	}
 
@@ -97,9 +103,9 @@ public class BoardField {
 		if (getClass() != obj.getClass())
 			return false;
 		BoardField other = (BoardField) obj;
-		if (x != other.x)
+		if (row != other.row)
 			return false;
-		if (y != other.y)
+		if (col != other.col)
 			return false;
 		return true;
 	}

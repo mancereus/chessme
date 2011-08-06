@@ -35,13 +35,13 @@ public class ChessMePlayer implements Player {
 
 	@Override
 	public void init() {
-		int modYpawn = color == Color.white ? 2 : -1;
-		int modYking = color == Color.white ? 3 : -2;
-		board.setStone(board.getMiddleX(), board.getMiddleY() + modYking, takeStone(Type.king));
-		board.setStone(board.getMiddleX() - 1, board.getMiddleY() + modYpawn, takeStone(Type.pawn));
-		board.setStone(board.getMiddleX(), board.getMiddleY() + modYpawn, takeStone(Type.pawn));
-		board.setStone(board.getMiddleX() + 1, board.getMiddleY() + modYpawn, takeStone(Type.pawn));
-		board.setStone(board.getMiddleX() + 2, board.getMiddleY() + modYpawn, takeStone(Type.pawn));
+		int modRowpawn = color == Color.white ? 2 : -1;
+		int modRowking = color == Color.white ? 3 : -2;
+		board.setStone(board.getMiddleRow() + modRowking, board.getMiddleCol(), takeStone(Type.king));
+		board.setStone(board.getMiddleRow() + modRowpawn, board.getMiddleCol() - 1, takeStone(Type.pawn));
+		board.setStone(board.getMiddleRow() + modRowpawn, board.getMiddleCol(), takeStone(Type.pawn));
+		board.setStone(board.getMiddleRow() + modRowpawn, board.getMiddleCol() + 1, takeStone(Type.pawn));
+		board.setStone(board.getMiddleRow() + modRowpawn, board.getMiddleCol() + 2, takeStone(Type.pawn));
 	}
 
 	@Override

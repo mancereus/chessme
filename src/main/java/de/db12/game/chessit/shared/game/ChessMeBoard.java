@@ -11,9 +11,9 @@ import de.db12.game.chessit.shared.game.ChessMeGame.Stone;
 
 public class ChessMeBoard implements Board {
 
-	int boardsize = 10;
+	int boardsize = 30;
 
-	protected BoardField[] fields;
+	protected BoardField[][] fields;
 
 	private String comment;
 
@@ -29,9 +29,11 @@ public class ChessMeBoard implements Board {
 
 	@Override
 	public void init() {
-		fields = new BoardField[boardsize * boardsize];
-		for (int i = 0; i < fields.length; i++) {
-			fields[i] = new BoardField(this, i % boardsize, i / boardsize);
+		fields = new BoardField[boardsize][boardsize];
+		for (int row = 0; row < boardsize; row++) {
+			for (int col = 0; col < boardsize; col++) {
+				fields[row][col] = new BoardField(this, row, col);
+			}
 		}
 	}
 
@@ -39,73 +41,69 @@ public class ChessMeBoard implements Board {
 	public void initRound() {
 	}
 
-	public BoardField getField(int x, int y) {
-		return fields[y * boardsize + x];
+	public BoardField getField(int row, int col) {
+		return fields[row][col];
 
 	}
 
-	public void addCheckField(Set<BoardField> ff, Color color, int x, int y) {
-		BoardField field = getField(x, y);
-		if (!field.isEmpty() && field.getStone().color == color)
-			return;
+	public void addCheckField(Set<BoardField> ff, int row, int col) {
+		BoardField field = getField(row, col);
 		field.setReachable(true);
 		ff.add(field);
 	}
 
 	public List<BoardField> getFieldsWithStones(Color color) {
 		List<BoardField> ret = Lists.newArrayList();
-		for (BoardField field : fields) {
-			if (!field.isEmpty() && field.getStone().color == color)
-				ret.add(field);
+		for (BoardField[] fieldrow : fields) {
+			for (BoardField fieldcol : fieldrow) {
+				if (!fieldcol.isEmpty() && fieldcol.getStone().color == color)
+					ret.add(fieldcol);
+			}
 		}
 		return ret;
 	}
 
-	public int getMiddleX() {
+	public int getMiddleRow() {
 		return boardsize / 2;
 	}
 
-	public int getMiddleY() {
+	public int getMiddleCol() {
 		return boardsize / 2;
 	}
 
 	@Override
-	public Set<BoardField> getReachableFields(Color color) {
+	public Set<BoardField> getReachableFields() {
 		Set<BoardField> ffs = Sets.newHashSet();
-		for (BoardField f : fields) {
-			f.setReachable(false);
+		for (BoardField[] frow : fields) {
+			for (BoardField fcol : frow) {
+				fcol.setReachable(false);
+			}
 		}
-		for (BoardField f : fields) {
-			if (f.isEmpty())
-				continue;
-			addCheckField(ffs, color, f.getX(), f.getY());
-			addCheckField(ffs, color, dec(f.getX()), dec(f.getY()));
-			addCheckField(ffs, color, dec(f.getX()), f.getY());
-			addCheckField(ffs, color, dec(f.getX()), inc(f.getY()));
-			addCheckField(ffs, color, f.getX(), dec(f.getY()));
-			addCheckField(ffs, color, f.getX(), f.getY());
-			addCheckField(ffs, color, f.getX(), inc(f.getY()));
-			addCheckField(ffs, color, inc(f.getX()), dec(f.getY()));
-			addCheckField(ffs, color, inc(f.getX()), f.getY());
-			addCheckField(ffs, color, inc(f.getX()), inc(f.getY()));
+		for (BoardField[] frow : fields) {
+			for (BoardField fcol : frow) {
+				if (fcol.isEmpty())
+					continue;
+				addCheckField(ffs, fcol.getRow(), fcol.getCol());
+				addCheckField(ffs, dec(fcol.getRow()), dec(fcol.getCol()));
+				addCheckField(ffs, dec(fcol.getRow()), fcol.getCol());
+				addCheckField(ffs, dec(fcol.getRow()), inc(fcol.getCol()));
+				addCheckField(ffs, fcol.getRow(), dec(fcol.getCol()));
+				addCheckField(ffs, fcol.getRow(), fcol.getCol());
+				addCheckField(ffs, fcol.getRow(), inc(fcol.getCol()));
+				addCheckField(ffs, inc(fcol.getRow()), dec(fcol.getCol()));
+				addCheckField(ffs, inc(fcol.getRow()), fcol.getCol());
+				addCheckField(ffs, inc(fcol.getRow()), inc(fcol.getCol()));
+			}
 		}
 		return ffs;
 	}
 
-	public void setStone(int x, int y, Stone takeStone) {
-		getField(x, y).setStone(takeStone);
+	public void setStone(int row, int col, Stone takeStone) {
+		getField(row, col).setStone(takeStone);
 	}
 
 	@Override
 	public String toString() {
-		// StringBuffer buf = new StringBuffer();
-
-		// for (int i = 0; i < fields.length; i++) {
-		// if (i % boardsize == 0)
-		// buf.append("\n");
-		// buf.append(fields[i].toString() + " ");
-		// }
-		// return buf.toString();
 		return new View(this).toString();
 	}
 
@@ -126,26 +124,26 @@ public class ChessMeBoard implements Board {
 	}
 
 	static class View {
-		int minx = Integer.MAX_VALUE;
+		int minrow = Integer.MAX_VALUE;
 
-		int miny = Integer.MAX_VALUE;
-		int maxx = 0;
-		int maxy = 0;
+		int mincol = Integer.MAX_VALUE;
+		int maxrow = 0;
+		int maxcol = 0;
 
 		private final ChessMeBoard board;
 
 		public View(ChessMeBoard board) {
 			this.board = board;
-			Set<BoardField> freeFields = board.getReachableFields(null);
+			Set<BoardField> freeFields = board.getReachableFields();
 			for (BoardField ff : freeFields) {
-				if (ff.getX() < minx)
-					minx = ff.getX();
-				if (ff.getX() > maxx)
-					maxx = ff.getX();
-				if (ff.getY() < miny)
-					miny = ff.getY();
-				if (ff.getY() > maxy)
-					maxy = ff.getY();
+				if (ff.getRow() < minrow)
+					minrow = ff.getRow();
+				if (ff.getRow() > maxrow)
+					maxrow = ff.getRow();
+				if (ff.getCol() < mincol)
+					mincol = ff.getCol();
+				if (ff.getCol() > maxcol)
+					maxcol = ff.getCol();
 			}
 		}
 
@@ -153,17 +151,19 @@ public class ChessMeBoard implements Board {
 		public String toString() {
 			StringBuffer buf = new StringBuffer("\n");
 
-			for (int i = 0; i < board.fields.length; i++) {
-				if (i % board.boardsize < minx || i / board.boardsize < miny || i / board.boardsize > maxy) {
+			for (int row = 0; row < board.fields.length; row++) {
+				if (row < minrow || row > maxrow) {
 					continue;
 				}
-				if (i % board.boardsize > maxx || i % board.boardsize == 0) {
-					buf.append("\n");
-					continue;
+				for (int col = 0; col < board.fields[row].length; col++) {
+					if (col < mincol || col > maxcol) {
+						continue;
+					}
+					buf.append(board.fields[row][col].toString() + " ");
 				}
-				buf.append(board.fields[i].toString() + " ");
+				buf.append("\n");
 			}
-			buf.append(board.comment);
+			buf.append(board.comment + " " + minrow + " " + maxrow + " " + mincol + " " + maxcol);
 			return buf.toString();
 		}
 	}

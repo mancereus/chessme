@@ -73,11 +73,11 @@ public class ChessMeGame extends BaseGame {
 			@Override
 			public List<BoardField> getFields(ChessMeBoard board, BoardField source, int dir) {
 				List<BoardField> targets = Lists.newArrayList();
-				checkField(targets, board, source.getX() - 1, source.getY());
-				checkField(targets, board, source.getX() + 1, source.getY());
-				checkField(targets, board, source.getX() - 1, source.getY() + dir);
-				checkField(targets, board, source.getX() + 1, source.getY() + dir);
-				checkField(targets, board, source.getX(), source.getY() + dir);
+				checkField(targets, board, source.getRow(), source.getCol() - 1);
+				checkField(targets, board, source.getRow(), source.getCol() + 1);
+				checkField(targets, board, source.getRow() + dir, source.getCol() - 1);
+				checkField(targets, board, source.getRow() + dir, source.getCol() + 1);
+				checkField(targets, board, source.getRow() + dir, source.getCol());
 				return targets;
 			}
 
@@ -87,14 +87,14 @@ public class ChessMeGame extends BaseGame {
 			public List<BoardField> getFields(ChessMeBoard board, BoardField source, int dir) {
 				List<BoardField> targets = Lists.newArrayList();
 				for (int i = 0; i < 4; i++) {
-					checkField(targets, board, source.getX() - i, source.getY() - i);
-					checkField(targets, board, source.getX() - i, source.getY());
-					checkField(targets, board, source.getX() - i, source.getY() + i);
-					checkField(targets, board, source.getX(), source.getY() - i);
-					checkField(targets, board, source.getX(), source.getY() + i);
-					checkField(targets, board, source.getX() + i, source.getY() - i);
-					checkField(targets, board, source.getX() + i, source.getY());
-					checkField(targets, board, source.getX() + i, source.getY() + i);
+					checkField(targets, board, source.getRow() - i, source.getCol() - i);
+					checkField(targets, board, source.getRow() - i, source.getCol());
+					checkField(targets, board, source.getRow() - i, source.getCol() + i);
+					checkField(targets, board, source.getRow(), source.getCol() - i);
+					checkField(targets, board, source.getRow(), source.getCol() + i);
+					checkField(targets, board, source.getRow() + i, source.getCol() - i);
+					checkField(targets, board, source.getRow() + i, source.getCol());
+					checkField(targets, board, source.getRow() + i, source.getCol() + i);
 				}
 				return targets;
 			}
@@ -104,9 +104,9 @@ public class ChessMeGame extends BaseGame {
 			@Override
 			public List<BoardField> getFields(ChessMeBoard board, BoardField source, int dir) {
 				List<BoardField> targets = Lists.newArrayList();
-				checkField(targets, board, source.getX() - 1, source.getY() + dir);
-				checkField(targets, board, source.getX() + 1, source.getY() + dir);
-				checkField(targets, board, source.getX(), source.getY() + dir);
+				checkField(targets, board, source.getRow() + dir, source.getCol() - 1);
+				checkField(targets, board, source.getRow() + dir, source.getCol());
+				checkField(targets, board, source.getRow() + dir, source.getCol() + 1);
 				return targets;
 			}
 
@@ -116,10 +116,10 @@ public class ChessMeGame extends BaseGame {
 			public List<BoardField> getFields(ChessMeBoard board, BoardField source, int dir) {
 				List<BoardField> targets = Lists.newArrayList();
 				for (int i = 0; i < 4; i++) {
-					checkField(targets, board, source.getX() - i, source.getY());
-					checkField(targets, board, source.getX(), source.getY() - i);
-					checkField(targets, board, source.getX(), source.getY() + i);
-					checkField(targets, board, source.getX() + i, source.getY());
+					checkField(targets, board, source.getRow() - i, source.getCol());
+					checkField(targets, board, source.getRow(), source.getCol() - i);
+					checkField(targets, board, source.getRow(), source.getCol() + i);
+					checkField(targets, board, source.getRow() + i, source.getCol());
 				}
 				return targets;
 			}
@@ -130,10 +130,10 @@ public class ChessMeGame extends BaseGame {
 			public List<BoardField> getFields(ChessMeBoard board, BoardField source, int dir) {
 				List<BoardField> targets = Lists.newArrayList();
 				for (int i = 0; i < 4; i++) {
-					checkField(targets, board, source.getX() - i, source.getY() - i);
-					checkField(targets, board, source.getX() - i, source.getY() + i);
-					checkField(targets, board, source.getX() + i, source.getY() - i);
-					checkField(targets, board, source.getX() + i, source.getY() + i);
+					checkField(targets, board, source.getRow() - i, source.getCol() - i);
+					checkField(targets, board, source.getRow() - i, source.getCol() + i);
+					checkField(targets, board, source.getRow() + i, source.getCol() - i);
+					checkField(targets, board, source.getRow() + i, source.getCol() + i);
 				}
 				return targets;
 			}
@@ -143,14 +143,14 @@ public class ChessMeGame extends BaseGame {
 			@Override
 			public List<BoardField> getFields(ChessMeBoard board, BoardField source, int dir) {
 				List<BoardField> targets = Lists.newArrayList();
-				targets.add(board.getField(source.getX() - 2, source.getY() + 1));
-				targets.add(board.getField(source.getX() - 2, source.getY() - 1));
-				targets.add(board.getField(source.getX() + 2, source.getY() + 1));
-				targets.add(board.getField(source.getX() + 2, source.getY() - 1));
-				targets.add(board.getField(source.getX() - 1, source.getY() + 2));
-				targets.add(board.getField(source.getX() - 1, source.getY() - 2));
-				targets.add(board.getField(source.getX() + 1, source.getY() + 2));
-				targets.add(board.getField(source.getX() + 1, source.getY() - 2));
+				targets.add(board.getField(source.getRow() - 2, source.getCol() + 1));
+				targets.add(board.getField(source.getRow() - 2, source.getCol() - 1));
+				targets.add(board.getField(source.getRow() + 2, source.getCol() + 1));
+				targets.add(board.getField(source.getRow() + 2, source.getCol() - 1));
+				targets.add(board.getField(source.getRow() - 1, source.getCol() + 2));
+				targets.add(board.getField(source.getRow() - 1, source.getCol() - 2));
+				targets.add(board.getField(source.getRow() + 1, source.getCol() + 2));
+				targets.add(board.getField(source.getRow() + 1, source.getCol() - 2));
 				return targets;
 			}
 
@@ -162,10 +162,10 @@ public class ChessMeGame extends BaseGame {
 			this.desc = desc;
 		}
 
-		protected void checkField(List<BoardField> targets, ChessMeBoard board, int x, int y) {
-			if (x < 0 || x >= board.boardsize || y < 0 || y >= board.boardsize)
+		protected void checkField(List<BoardField> targets, ChessMeBoard board, int row, int col) {
+			if (row < 0 || row >= board.boardsize || col < 0 || col >= board.boardsize)
 				return;
-			BoardField field = board.getField(x, y);
+			BoardField field = board.getField(row, col);
 			if (field.isReachable())
 				targets.add(field);
 
