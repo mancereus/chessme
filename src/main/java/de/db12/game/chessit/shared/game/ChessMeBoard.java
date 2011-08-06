@@ -126,19 +126,19 @@ public class ChessMeBoard implements Board {
 				continue;
 			if (!target.isEmpty() && target.getStone().color != player.getColor()) {
 				moveok = true;
-				value = 3;
+				value = 5;
 				if (target.getStone().type == Type.king)
 					value = 99;
 			} else {
 				for (Field neighbor : getNeighbors(target)) {
 					if (neighbor != from && !neighbor.isEmpty()) {
 						moveok = true;
-						value = 1;
+						value = 3;
 					}
 				}
 			}
 			if (moveok)
-				ret.add(new Move(from, target, value));
+				ret.add(new Move(from, target, value + from.getStone().type.basicvalue));
 		}
 		return ret;
 	}

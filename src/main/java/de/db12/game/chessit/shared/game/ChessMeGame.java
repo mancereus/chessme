@@ -69,7 +69,7 @@ public class ChessMeGame extends BaseGame {
 	}
 
 	public enum Type {
-		king("k") {
+		king("k", -1) {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 				List<Field> targets = Lists.newArrayList();
@@ -86,7 +86,7 @@ public class ChessMeGame extends BaseGame {
 			}
 
 		},
-		queen("q") {
+		queen("q", 5) {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 				List<Field> targets = Lists.newArrayList();
@@ -126,7 +126,7 @@ public class ChessMeGame extends BaseGame {
 			}
 
 		},
-		pawn("p") {
+		pawn("p", 5) {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 				List<Field> targets = Lists.newArrayList();
@@ -154,7 +154,7 @@ public class ChessMeGame extends BaseGame {
 			}
 
 		},
-		rook("r") {
+		rook("r", 4) {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 				List<Field> targets = Lists.newArrayList();
@@ -178,7 +178,7 @@ public class ChessMeGame extends BaseGame {
 			}
 
 		},
-		bishop("b") {
+		bishop("b", 4) {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 				List<Field> targets = Lists.newArrayList();
@@ -202,7 +202,7 @@ public class ChessMeGame extends BaseGame {
 			}
 
 		},
-		horse("h") {
+		horse("h", 4) {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 				List<Field> targets = Lists.newArrayList();
@@ -220,9 +220,11 @@ public class ChessMeGame extends BaseGame {
 		};
 
 		private String desc;
+		int basicvalue;
 
-		Type(String desc) {
+		Type(String desc, int value) {
 			this.desc = desc;
+			this.basicvalue = value;
 		}
 
 		protected boolean checkField(List<Field> targets, ChessMeBoard board, int row, int col) {
