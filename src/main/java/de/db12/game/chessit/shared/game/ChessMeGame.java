@@ -78,6 +78,10 @@ public class ChessMeGame extends BaseGame {
 				checkField(targets, board, source.getRow() + dir, source.getCol() - 1);
 				checkField(targets, board, source.getRow() + dir, source.getCol() + 1);
 				checkField(targets, board, source.getRow() + dir, source.getCol());
+				Color color = source.getStone().color;
+				checkFieldOnlyForKill(targets, board, source.getRow() - dir, source.getCol() - 1, color);
+				checkFieldOnlyForKill(targets, board, source.getRow() - dir, source.getCol() + 1, color);
+				checkFieldOnlyForKill(targets, board, source.getRow() - dir, source.getCol(), color);
 				return targets;
 			}
 
@@ -86,7 +90,7 @@ public class ChessMeGame extends BaseGame {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 				List<Field> targets = Lists.newArrayList();
-				for (int i = 0; i < 4; i++) {
+				for (int i = 0; i < 8; i++) {
 					checkField(targets, board, source.getRow() - i, source.getCol() - i);
 					checkField(targets, board, source.getRow() - i, source.getCol());
 					checkField(targets, board, source.getRow() - i, source.getCol() + i);
@@ -104,9 +108,10 @@ public class ChessMeGame extends BaseGame {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 				List<Field> targets = Lists.newArrayList();
-				checkField(targets, board, source.getRow() + dir, source.getCol() - 1);
+				Color color = source.getStone().color;
+				checkFieldOnlyForKill(targets, board, source.getRow() + dir, source.getCol() - 1, color);
 				checkField(targets, board, source.getRow() + dir, source.getCol());
-				checkField(targets, board, source.getRow() + dir, source.getCol() + 1);
+				checkFieldOnlyForKill(targets, board, source.getRow() + dir, source.getCol() + 1, color);
 				return targets;
 			}
 
@@ -131,7 +136,7 @@ public class ChessMeGame extends BaseGame {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 				List<Field> targets = Lists.newArrayList();
-				for (int i = 0; i < 4; i++) {
+				for (int i = 0; i < 8; i++) {
 					checkField(targets, board, source.getRow() - i, source.getCol());
 					checkField(targets, board, source.getRow(), source.getCol() - i);
 					checkField(targets, board, source.getRow(), source.getCol() + i);
@@ -145,7 +150,7 @@ public class ChessMeGame extends BaseGame {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 				List<Field> targets = Lists.newArrayList();
-				for (int i = 0; i < 4; i++) {
+				for (int i = 0; i < 8; i++) {
 					checkField(targets, board, source.getRow() - i, source.getCol() - i);
 					checkField(targets, board, source.getRow() - i, source.getCol() + i);
 					checkField(targets, board, source.getRow() + i, source.getCol() - i);
@@ -187,11 +192,20 @@ public class ChessMeGame extends BaseGame {
 
 		}
 
+		protected void checkFieldOnlyForKill(List<Field> targets, ChessMeBoard board, int row, int col, Color color) {
+			if (row < 0 || row >= board.boardsize || col < 0 || col >= board.boardsize)
+				return;
+			Field field = board.getField(row, col);
+			if (field.isReachable() && !field.isEmpty() && field.getStone().color != color)
+				targets.add(field);
+
+		}
+
 		public String desc() {
 			return desc;
 		}
 
-		public List<Field> getFields(ChessMeBoard board, Field boardField, int dir) {
+		public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 			List<Field> targets = Lists.newArrayList();
 
 			return targets;
