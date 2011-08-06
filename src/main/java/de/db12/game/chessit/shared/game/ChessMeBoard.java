@@ -19,6 +19,7 @@ public class ChessMeBoard implements Board {
 	private String comment;
 
 	private Game game;
+	private final List<Stone> trash = Lists.newArrayList();
 
 	private int dec(int val) {
 		return Math.max(0, val - 1);
@@ -43,6 +44,8 @@ public class ChessMeBoard implements Board {
 	}
 
 	public Field getField(int row, int col) {
+		if (row < 0 || row >= boardsize || col < 0 || col >= boardsize)
+			return null;
 		return fields[row][col];
 
 	}
@@ -205,8 +208,23 @@ public class ChessMeBoard implements Board {
 				}
 				buf.append("\n");
 			}
-			buf.append(board.comment + " " + minrow + " " + maxrow + " " + mincol + " " + maxcol);
+			buf.append(board.comment);
 			return buf.toString();
 		}
+	}
+
+	public List<Stone> getTrash() {
+		return trash;
+	}
+
+	public Set<Field> getInsertFields(Stone stone) {
+		Set<Field> inserts = Sets.newHashSet();
+		for (int row = 0; row < fields.length; row++) {
+			for (int col = 0; col < fields[row].length; col++) {
+				if (stone.type.isInsertable(this, stone, fields[row][col]))
+					inserts.add(fields[row][col]);
+			}
+		}
+		return inserts;
 	}
 }

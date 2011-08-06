@@ -110,6 +110,22 @@ public class ChessMeGame extends BaseGame {
 				return targets;
 			}
 
+			@Override
+			public boolean isInsertable(ChessMeBoard board, Stone stone, Field field) {
+				if (!field.isEmpty())
+					return false;
+				Field sidefieldleft = board.getField(field.getRow(), field.getCol() - 1);
+				if (sidefieldleft != null && !sidefieldleft.isEmpty() && sidefieldleft.getStone().color == stone.color
+						&& sidefieldleft.getStone().type == Type.pawn)
+					return true;
+				Field sidefieldright = board.getField(field.getRow(), field.getCol() + 1);
+				if (sidefieldright != null && !sidefieldright.isEmpty()
+						&& sidefieldright.getStone().color == stone.color
+						&& sidefieldright.getStone().type == Type.pawn)
+					return true;
+				return false;
+			}
+
 		},
 		rook("r") {
 			@Override
@@ -179,6 +195,16 @@ public class ChessMeGame extends BaseGame {
 			List<Field> targets = Lists.newArrayList();
 
 			return targets;
+		}
+
+		public boolean isInsertable(ChessMeBoard board, Stone stone, Field field) {
+			if (!field.isEmpty())
+				return false;
+			Field forfield = board.getField(field.getRow() + stone.color.dir(), field.getCol());
+			if (forfield != null && !forfield.isEmpty() && forfield.getStone().color == stone.color
+					&& forfield.getStone().type == Type.pawn)
+				return true;
+			return false;
 		}
 	}
 

@@ -17,7 +17,6 @@ public class ChessMePlayer implements Player {
 
 	private final Color color;
 	private final List<Stone> hand = Lists.newArrayList();
-	private final List<Stone> trash = Lists.newArrayList();
 	private List<Stone> stack = Lists.newArrayList();
 	private final ChessMeBoard board;
 
@@ -63,7 +62,21 @@ public class ChessMePlayer implements Player {
 			return;
 		Move move = moves.iterator().next();
 		moveFromTo(move);
+		for (Stone stone : hand) {
+			if (insertStone(stone))
+				break;
+		}
 
+	}
+
+	private boolean insertStone(Stone stone) {
+		Set<Field> inserts = board.getInsertFields(stone);
+		if (inserts.isEmpty())
+			return false;
+		Field next = inserts.iterator().next();
+		next.setStone(stone);
+		hand.remove(stone);
+		return true;
 	}
 
 	private void moveFromTo(Move move) {
@@ -74,6 +87,7 @@ public class ChessMePlayer implements Player {
 					+ "(" + move.getValue() + ")");
 			checkWin(move.getTo().getStone());
 		}
+		board.getTrash().add(move.getTo().getStone());
 		move.getTo().setStone(move.getFrom().getStone());
 		move.getFrom().setStone(null);
 	}
