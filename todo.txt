@@ -1,0 +1,3 @@
+* validate target fields support and attacks
+* refill hand after insert
+*
