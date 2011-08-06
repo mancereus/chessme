@@ -4,10 +4,10 @@ import java.util.Set;
 
 public interface Board {
 
-	Set<BoardField> getReachableFields();
-
 	void init();
 
 	void initRound();
+
+	Set<BoardField> updateReachableFields();
 
 }

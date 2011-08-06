@@ -1,14 +1,12 @@
 package de.db12.game.chessit.shared.game;
 
 import java.util.List;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gwt.thirdparty.guava.common.collect.Sets;
+import com.google.gwt.thirdparty.guava.common.collect.Lists;
 
-import de.db12.game.chessit.shared.game.ChessMeGame.Color;
 import de.db12.game.chessit.shared.game.ChessMeGame.Stone;
 
 public class BoardField {
@@ -31,21 +29,6 @@ public class BoardField {
 
 	public Board getBoard() {
 		return board;
-	}
-
-	public Set<BoardField> getMovableFields(Color color) {
-		Set<BoardField> targets = board.getReachableFields();
-		if (isEmpty())
-			return targets;
-		List<BoardField> moves = getStone().type.getFields(board, this, getStone().color.dir());
-		Set<BoardField> ret = Sets.newHashSet();
-		for (BoardField boardField : targets) {
-			if (!boardField.isEmpty() && boardField.getStone().color == color)
-				continue;
-			if (moves.contains(boardField))
-				ret.add(boardField);
-		}
-		return ret;
 	}
 
 	public Stone getStone() {
@@ -118,4 +101,9 @@ public class BoardField {
 		this.reachable = reachable;
 	}
 
+	public List<BoardField> getMoves() {
+		if (isEmpty())
+			return Lists.newArrayList();
+		return getStone().type.getFields(board, this, getStone().color.dir());
+	}
 }

@@ -46,11 +46,11 @@ public class ChessMeBoard implements Board {
 
 	}
 
-	public void addCheckField(Set<BoardField> ff, int row, int col) {
-		BoardField field = getField(row, col);
-		field.setReachable(true);
-		ff.add(field);
-	}
+	// public void addCheckField(Set<BoardField> ff, int row, int col) {
+	// BoardField field = getField(row, col);
+	// field.setReachable(true);
+	// ff.add(field);
+	// }
 
 	public List<BoardField> getFieldsWithStones(Color color) {
 		List<BoardField> ret = Lists.newArrayList();
@@ -72,7 +72,7 @@ public class ChessMeBoard implements Board {
 	}
 
 	@Override
-	public Set<BoardField> getReachableFields() {
+	public Set<BoardField> updateReachableFields() {
 		Set<BoardField> ffs = Sets.newHashSet();
 		for (BoardField[] frow : fields) {
 			for (BoardField fcol : frow) {
@@ -83,19 +83,54 @@ public class ChessMeBoard implements Board {
 			for (BoardField fcol : frow) {
 				if (fcol.isEmpty())
 					continue;
-				addCheckField(ffs, fcol.getRow(), fcol.getCol());
-				addCheckField(ffs, dec(fcol.getRow()), dec(fcol.getCol()));
-				addCheckField(ffs, dec(fcol.getRow()), fcol.getCol());
-				addCheckField(ffs, dec(fcol.getRow()), inc(fcol.getCol()));
-				addCheckField(ffs, fcol.getRow(), dec(fcol.getCol()));
-				addCheckField(ffs, fcol.getRow(), fcol.getCol());
-				addCheckField(ffs, fcol.getRow(), inc(fcol.getCol()));
-				addCheckField(ffs, inc(fcol.getRow()), dec(fcol.getCol()));
-				addCheckField(ffs, inc(fcol.getRow()), fcol.getCol());
-				addCheckField(ffs, inc(fcol.getRow()), inc(fcol.getCol()));
+				fcol.setReachable(true);
+				ffs.add(fcol);
+				Set<BoardField> neighbors = getNeighbors(fcol);
+				for (BoardField boardField : neighbors) {
+					boardField.setReachable(true);
+				}
+				ffs.addAll(neighbors);
 			}
 		}
 		return ffs;
+	}
+
+	public Set<BoardField> getNeighbors(BoardField field) {
+		Set<BoardField> targets = Sets.newHashSet();
+		targets.add(getField(dec(field.getRow()), dec(field.getCol())));
+		targets.add(getField(dec(field.getRow()), field.getCol()));
+		targets.add(getField(dec(field.getRow()), inc(field.getCol())));
+		targets.add(getField(field.getRow(), dec(field.getCol())));
+		targets.add(getField(field.getRow(), inc(field.getCol())));
+		targets.add(getField(inc(field.getRow()), dec(field.getCol())));
+		targets.add(getField(inc(field.getRow()), field.getCol()));
+		targets.add(getField(inc(field.getRow()), inc(field.getCol())));
+		return targets;
+	}
+
+	public Set<BoardField> getMovableFields(Player player, BoardField from) {
+		Set<BoardField> targets = updateReachableFields();
+		if (targets.isEmpty())
+			return targets;
+		List<BoardField> moves = from.getMoves();
+		targets.retainAll(moves);
+		Set<BoardField> ret = Sets.newHashSet();
+		boolean moveok = false;
+		for (BoardField target : targets) {
+			if (!target.isEmpty() && target.getStone().color == player.getColor())
+				continue;
+			if (!target.isEmpty() && target.getStone().color != player.getColor()) {
+				moveok = true;
+			} else {
+				for (BoardField neighbor : getNeighbors(target)) {
+					if (neighbor != from && !neighbor.isEmpty())
+						moveok = true;
+				}
+			}
+			if (moveok)
+				ret.add(target);
+		}
+		return ret;
 	}
 
 	public void setStone(int row, int col, Stone takeStone) {
@@ -134,7 +169,7 @@ public class ChessMeBoard implements Board {
 
 		public View(ChessMeBoard board) {
 			this.board = board;
-			Set<BoardField> freeFields = board.getReachableFields();
+			Set<BoardField> freeFields = board.updateReachableFields();
 			for (BoardField ff : freeFields) {
 				if (ff.getRow() < minrow)
 					minrow = ff.getRow();

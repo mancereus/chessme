@@ -1,5 +1,6 @@
 package de.db12.game.chessit.shared.game;
 
+import de.db12.game.chessit.shared.game.ChessMeGame.Color;
 import de.db12.game.chessit.shared.game.ChessMeGame.Stone;
 import de.db12.game.chessit.shared.game.ChessMeGame.Type;
 
@@ -13,4 +14,6 @@ public interface Player {
 	public String showHand();
 
 	public Stone takeStone(Type type);
+
+	public Color getColor();
 }

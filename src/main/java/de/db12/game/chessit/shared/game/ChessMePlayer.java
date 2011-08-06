@@ -26,11 +26,11 @@ public class ChessMePlayer implements Player {
 		stack = Stone.getAllStones(color);
 	}
 
-	private BoardField getFieldWithStoneToMove() {
+	private List<BoardField> getFieldWithStones() {
 		List<BoardField> fields = board.getFieldsWithStones(color);
 		if (fields.isEmpty())
-			return null;
-		return fields.get(random.nextInt(fields.size()));
+			return Lists.newArrayList();
+		return fields;
 	}
 
 	@Override
@@ -53,12 +53,15 @@ public class ChessMePlayer implements Player {
 
 	@Override
 	public void move() {
-		BoardField field = getFieldWithStoneToMove();
-		Set<BoardField> targets = field.getMovableFields(color);
-		if (targets.isEmpty())
-			return;
-		BoardField target = targets.iterator().next();
-		moveFromTo(field, target);
+		List<BoardField> fields = getFieldWithStones();
+		for (BoardField source : fields) {
+			Set<BoardField> targets = board.getMovableFields(this, source);
+			if (targets.isEmpty())
+				continue;
+			BoardField target = targets.iterator().next();
+			moveFromTo(source, target);
+			break;
+		}
 
 	}
 
@@ -93,5 +96,10 @@ public class ChessMePlayer implements Player {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public Color getColor() {
+		return color;
 	}
 }
