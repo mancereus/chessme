@@ -8,6 +8,6 @@ public interface Board {
 
 	void initRound();
 
-	Set<BoardField> updateReachableFields();
+	Set<Field> updateReachableFields();
 
 }

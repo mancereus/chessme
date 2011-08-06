@@ -8,8 +8,8 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </interface>  
-  <class id="2" corner="BOTTOM_RIGHT" language="java" name="de.db12.game.chessit.shared.game.BoardField" 
-    project="chessit" file="/chessit/src/main/java/de/db12/game/chessit/shared/game/BoardField.java" binary="false">    
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="de.db12.game.chessit.shared.game.Field" project="chessit" 
+    file="/chessit/src/main/java/de/db12/game/chessit/shared/game/Field.java" binary="false">    
     <position height="-1" width="-1" x="289" y="658"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      

@@ -8,12 +8,13 @@ import com.google.common.collect.Sets;
 
 import de.db12.game.chessit.shared.game.ChessMeGame.Color;
 import de.db12.game.chessit.shared.game.ChessMeGame.Stone;
+import de.db12.game.chessit.shared.game.ChessMeGame.Type;
 
 public class ChessMeBoard implements Board {
 
 	int boardsize = 30;
 
-	protected BoardField[][] fields;
+	protected Field[][] fields;
 
 	private String comment;
 
@@ -29,10 +30,10 @@ public class ChessMeBoard implements Board {
 
 	@Override
 	public void init() {
-		fields = new BoardField[boardsize][boardsize];
+		fields = new Field[boardsize][boardsize];
 		for (int row = 0; row < boardsize; row++) {
 			for (int col = 0; col < boardsize; col++) {
-				fields[row][col] = new BoardField(this, row, col);
+				fields[row][col] = new Field(this, row, col);
 			}
 		}
 	}
@@ -41,7 +42,7 @@ public class ChessMeBoard implements Board {
 	public void initRound() {
 	}
 
-	public BoardField getField(int row, int col) {
+	public Field getField(int row, int col) {
 		return fields[row][col];
 
 	}
@@ -52,10 +53,10 @@ public class ChessMeBoard implements Board {
 	// ff.add(field);
 	// }
 
-	public List<BoardField> getFieldsWithStones(Color color) {
-		List<BoardField> ret = Lists.newArrayList();
-		for (BoardField[] fieldrow : fields) {
-			for (BoardField fieldcol : fieldrow) {
+	public List<Field> getFieldsWithStones(Color color) {
+		List<Field> ret = Lists.newArrayList();
+		for (Field[] fieldrow : fields) {
+			for (Field fieldcol : fieldrow) {
 				if (!fieldcol.isEmpty() && fieldcol.getStone().color == color)
 					ret.add(fieldcol);
 			}
@@ -72,21 +73,21 @@ public class ChessMeBoard implements Board {
 	}
 
 	@Override
-	public Set<BoardField> updateReachableFields() {
-		Set<BoardField> ffs = Sets.newHashSet();
-		for (BoardField[] frow : fields) {
-			for (BoardField fcol : frow) {
+	public Set<Field> updateReachableFields() {
+		Set<Field> ffs = Sets.newHashSet();
+		for (Field[] frow : fields) {
+			for (Field fcol : frow) {
 				fcol.setReachable(false);
 			}
 		}
-		for (BoardField[] frow : fields) {
-			for (BoardField fcol : frow) {
+		for (Field[] frow : fields) {
+			for (Field fcol : frow) {
 				if (fcol.isEmpty())
 					continue;
 				fcol.setReachable(true);
 				ffs.add(fcol);
-				Set<BoardField> neighbors = getNeighbors(fcol);
-				for (BoardField boardField : neighbors) {
+				Set<Field> neighbors = getNeighbors(fcol);
+				for (Field boardField : neighbors) {
 					boardField.setReachable(true);
 				}
 				ffs.addAll(neighbors);
@@ -95,8 +96,8 @@ public class ChessMeBoard implements Board {
 		return ffs;
 	}
 
-	public Set<BoardField> getNeighbors(BoardField field) {
-		Set<BoardField> targets = Sets.newHashSet();
+	public Set<Field> getNeighbors(Field field) {
+		Set<Field> targets = Sets.newHashSet();
 		targets.add(getField(dec(field.getRow()), dec(field.getCol())));
 		targets.add(getField(dec(field.getRow()), field.getCol()));
 		targets.add(getField(dec(field.getRow()), inc(field.getCol())));
@@ -108,27 +109,33 @@ public class ChessMeBoard implements Board {
 		return targets;
 	}
 
-	public Set<BoardField> getMovableFields(Player player, BoardField from) {
-		Set<BoardField> targets = updateReachableFields();
+	public Set<Move> getMoves(Player player, Field from) {
+		Set<Field> targets = updateReachableFields();
 		if (targets.isEmpty())
-			return targets;
-		List<BoardField> moves = from.getMoves();
+			return Sets.newHashSet();
+		List<Field> moves = from.getMoves();
 		targets.retainAll(moves);
-		Set<BoardField> ret = Sets.newHashSet();
+		Set<Move> ret = Sets.newHashSet();
 		boolean moveok = false;
-		for (BoardField target : targets) {
+		int value = 0;
+		for (Field target : targets) {
 			if (!target.isEmpty() && target.getStone().color == player.getColor())
 				continue;
 			if (!target.isEmpty() && target.getStone().color != player.getColor()) {
 				moveok = true;
+				value = 3;
+				if (target.getStone().type == Type.king)
+					value = 99;
 			} else {
-				for (BoardField neighbor : getNeighbors(target)) {
-					if (neighbor != from && !neighbor.isEmpty())
+				for (Field neighbor : getNeighbors(target)) {
+					if (neighbor != from && !neighbor.isEmpty()) {
 						moveok = true;
+						value = 1;
+					}
 				}
 			}
 			if (moveok)
-				ret.add(target);
+				ret.add(new Move(from, target, value));
 		}
 		return ret;
 	}
@@ -169,8 +176,8 @@ public class ChessMeBoard implements Board {
 
 		public View(ChessMeBoard board) {
 			this.board = board;
-			Set<BoardField> freeFields = board.updateReachableFields();
-			for (BoardField ff : freeFields) {
+			Set<Field> freeFields = board.updateReachableFields();
+			for (Field ff : freeFields) {
 				if (ff.getRow() < minrow)
 					minrow = ff.getRow();
 				if (ff.getRow() > maxrow)

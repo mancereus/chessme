@@ -3,6 +3,7 @@ package de.db12.game.chessit.shared.game;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -26,8 +27,8 @@ public class ChessMePlayer implements Player {
 		stack = Stone.getAllStones(color);
 	}
 
-	private List<BoardField> getFieldWithStones() {
-		List<BoardField> fields = board.getFieldsWithStones(color);
+	private List<Field> getFieldWithStones() {
+		List<Field> fields = board.getFieldsWithStones(color);
 		if (fields.isEmpty())
 			return Lists.newArrayList();
 		return fields;
@@ -53,27 +54,28 @@ public class ChessMePlayer implements Player {
 
 	@Override
 	public void move() {
-		List<BoardField> fields = getFieldWithStones();
-		for (BoardField source : fields) {
-			Set<BoardField> targets = board.getMovableFields(this, source);
-			if (targets.isEmpty())
-				continue;
-			BoardField target = targets.iterator().next();
-			moveFromTo(source, target);
-			break;
+		List<Field> fields = getFieldWithStones();
+		Set<Move> moves = new TreeSet<Move>();
+		for (Field source : fields) {
+			moves.addAll(board.getMoves(this, source));
 		}
+		if (moves.isEmpty())
+			return;
+		Move move = moves.iterator().next();
+		moveFromTo(move);
 
 	}
 
-	private void moveFromTo(BoardField field, BoardField target) {
-		if (target.isEmpty())
-			board.setComment("move " + field.getStone().toString());
+	private void moveFromTo(Move move) {
+		if (move.getTo().isEmpty())
+			board.setComment("move " + move.getFrom().getStone().toString() + "(" + move.getValue() + ")");
 		else {
-			board.setComment(field.getStone().toString() + " kills " + target.getStone().toString());
-			checkWin(target.getStone());
+			board.setComment(move.getFrom().getStone().toString() + " kills " + move.getTo().getStone().toString()
+					+ "(" + move.getValue() + ")");
+			checkWin(move.getTo().getStone());
 		}
-		target.setStone(field.getStone());
-		field.setStone(null);
+		move.getTo().setStone(move.getFrom().getStone());
+		move.getFrom().setStone(null);
 	}
 
 	private void checkWin(Stone stone) {
