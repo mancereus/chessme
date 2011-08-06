@@ -215,7 +215,7 @@ public class ChessMeGame extends BaseGame {
 
 	@Override
 	public boolean isFinished() {
-		return round > 100;
+		return finished || round > 100;
 	}
 
 	@Override

@@ -15,7 +15,7 @@ public abstract class BaseGame implements Game {
 
 	protected int round = 0;
 
-	private boolean finished;
+	protected boolean finished;
 
 	@Inject
 	public BaseGame(Board board, List<Player> players) {
