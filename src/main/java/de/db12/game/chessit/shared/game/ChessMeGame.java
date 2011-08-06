@@ -91,14 +91,36 @@ public class ChessMeGame extends BaseGame {
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 				List<Field> targets = Lists.newArrayList();
 				for (int i = 0; i < 8; i++) {
-					checkField(targets, board, source.getRow() - i, source.getCol() - i);
-					checkField(targets, board, source.getRow() - i, source.getCol());
-					checkField(targets, board, source.getRow() - i, source.getCol() + i);
-					checkField(targets, board, source.getRow(), source.getCol() - i);
-					checkField(targets, board, source.getRow(), source.getCol() + i);
-					checkField(targets, board, source.getRow() + i, source.getCol() - i);
-					checkField(targets, board, source.getRow() + i, source.getCol());
-					checkField(targets, board, source.getRow() + i, source.getCol() + i);
+					if (!checkField(targets, board, source.getRow() - i, source.getCol() - i))
+						break;
+				}
+				for (int i = 0; i < 8; i++) {
+					if (!checkField(targets, board, source.getRow() - i, source.getCol()))
+						break;
+				}
+				for (int i = 0; i < 8; i++) {
+					if (!checkField(targets, board, source.getRow() - i, source.getCol() + i))
+						break;
+				}
+				for (int i = 0; i < 8; i++) {
+					if (!checkField(targets, board, source.getRow(), source.getCol() - i))
+						break;
+				}
+				for (int i = 0; i < 8; i++) {
+					if (!checkField(targets, board, source.getRow(), source.getCol() + i))
+						break;
+				}
+				for (int i = 0; i < 8; i++) {
+					if (!checkField(targets, board, source.getRow() + i, source.getCol() - i))
+						break;
+				}
+				for (int i = 0; i < 8; i++) {
+					if (!checkField(targets, board, source.getRow() + i, source.getCol()))
+						break;
+				}
+				for (int i = 0; i < 8; i++) {
+					if (!checkField(targets, board, source.getRow() + i, source.getCol() + i))
+						break;
 				}
 				return targets;
 			}
@@ -137,10 +159,20 @@ public class ChessMeGame extends BaseGame {
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 				List<Field> targets = Lists.newArrayList();
 				for (int i = 0; i < 8; i++) {
-					checkField(targets, board, source.getRow() - i, source.getCol());
-					checkField(targets, board, source.getRow(), source.getCol() - i);
-					checkField(targets, board, source.getRow(), source.getCol() + i);
-					checkField(targets, board, source.getRow() + i, source.getCol());
+					if (!checkField(targets, board, source.getRow() - i, source.getCol()))
+						break;
+				}
+				for (int i = 0; i < 8; i++) {
+					if (!checkField(targets, board, source.getRow(), source.getCol() - i))
+						break;
+				}
+				for (int i = 0; i < 8; i++) {
+					if (!checkField(targets, board, source.getRow(), source.getCol() + i))
+						break;
+				}
+				for (int i = 0; i < 8; i++) {
+					if (!checkField(targets, board, source.getRow() + i, source.getCol()))
+						break;
 				}
 				return targets;
 			}
@@ -151,10 +183,20 @@ public class ChessMeGame extends BaseGame {
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
 				List<Field> targets = Lists.newArrayList();
 				for (int i = 0; i < 8; i++) {
-					checkField(targets, board, source.getRow() - i, source.getCol() - i);
-					checkField(targets, board, source.getRow() - i, source.getCol() + i);
-					checkField(targets, board, source.getRow() + i, source.getCol() - i);
-					checkField(targets, board, source.getRow() + i, source.getCol() + i);
+					if (!checkField(targets, board, source.getRow() - i, source.getCol() - i))
+						break;
+				}
+				for (int i = 0; i < 8; i++) {
+					if (!checkField(targets, board, source.getRow() - i, source.getCol() + i))
+						break;
+				}
+				for (int i = 0; i < 8; i++) {
+					if (!checkField(targets, board, source.getRow() + i, source.getCol() - i))
+						break;
+				}
+				for (int i = 0; i < 8; i++) {
+					if (!checkField(targets, board, source.getRow() + i, source.getCol() + i))
+						break;
 				}
 				return targets;
 			}
@@ -183,12 +225,15 @@ public class ChessMeGame extends BaseGame {
 			this.desc = desc;
 		}
 
-		protected void checkField(List<Field> targets, ChessMeBoard board, int row, int col) {
+		protected boolean checkField(List<Field> targets, ChessMeBoard board, int row, int col) {
 			if (row < 0 || row >= board.boardsize || col < 0 || col >= board.boardsize)
-				return;
+				return false;
 			Field field = board.getField(row, col);
 			if (field.isReachable())
 				targets.add(field);
+			if (field.isEmpty())
+				return true;
+			return false;
 
 		}
 
