@@ -4,59 +4,46 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.DataResource;
 import com.google.gwt.user.client.ui.Image;
 
-import de.db12.game.chessit.shared.model.Place;
-import de.db12.game.chessit.shared.model.Stone;
+import de.db12.game.chessit.shared.game.ChessMeGame.Color;
+import de.db12.game.chessit.shared.game.ChessMeGame.Stone;
 
 public class StoneView extends Image {
 
-    private static BoardResources res = GWT.create(BoardResources.class);
-    private final Place field;
+	private static BoardResources res = GWT.create(BoardResources.class);
+	private final Stone stone;
 
-    public StoneView(Place place, int pxsize) {
-        super(getDataResource(place.getStone()).getUrl());
-        setWidth(pxsize + "px");
-        setHeight(pxsize + "px");
-        addStyleName(res.style().border());
-        this.field = place;
-    }
+	public StoneView(Stone handstone, int pxsize) {
+		super(getDataResource(handstone).getUrl());
+		setWidth(pxsize + "px");
+		setHeight(pxsize + "px");
+		addStyleName(res.style().border());
+		this.stone = handstone;
+	}
 
-    public static DataResource getDataResource(Stone stone) {
-        if (stone == null)
-            return res.empty();
-        switch (stone.getType()) {
-        case bbishop:
-            return res.bbishop();
-        case bking:
-            return res.bking();
-        case bqueen:
-            return res.bqueen();
-        case bpawn:
-            return res.bpawn();
-        case brook:
-            return res.brook();
-        case bknight:
-            return res.bknight();
-        case wbishop:
-            return res.wbishop();
-        case wking:
-            return res.wking();
-        case wqueen:
-            return res.wqueen();
-        case wpawn:
-            return res.wpawn();
-        case wrook:
-            return res.wrook();
-        case wknight:
-            return res.wknight();
-        case empty:
-            return res.empty();
-        default:
-            break;
-        }
-        return null;
-    }
+	public static DataResource getDataResource(Stone stone) {
+		if (stone == null)
+			return res.empty();
+		Color color = stone.color;
+		switch (stone.getType()) {
+		case bishop:
+			return color == Color.white ? res.wbishop() : res.bbishop();
+		case king:
+			return color == Color.white ? res.wking() : res.bking();
+		case queen:
+			return color == Color.white ? res.wqueen() : res.bqueen();
+		case pawn:
+			return color == Color.white ? res.wpawn() : res.bpawn();
+		case rook:
+			return color == Color.white ? res.wrook() : res.brook();
+		case horse:
+			return color == Color.white ? res.wknight() : res.bknight();
+		default:
+			break;
+		}
+		return null;
+	}
 
-    public Place getPlace() {
-        return field;
-    }
+	public Stone getStone() {
+		return stone;
+	}
 }

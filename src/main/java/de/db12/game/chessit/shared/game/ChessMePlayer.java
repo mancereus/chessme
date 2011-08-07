@@ -118,4 +118,9 @@ public class ChessMePlayer implements Player {
 	public Color getColor() {
 		return color;
 	}
+
+	@Override
+	public List<Stone> getHand() {
+		return hand;
+	}
 }

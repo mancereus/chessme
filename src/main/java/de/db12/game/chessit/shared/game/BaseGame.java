@@ -7,18 +7,18 @@ import org.slf4j.LoggerFactory;
 
 import com.google.inject.Inject;
 
-public abstract class BaseGame implements Game {
+public abstract class BaseGame<B extends Board> implements Game<B> {
 	private static final Logger log = LoggerFactory.getLogger(BaseGame.class);
 
-	protected Board board;
-	protected List<Player> players;
+	private final B board;
+	private final List<Player> players;
 
 	protected int round = 0;
 
 	protected boolean finished;
 
 	@Inject
-	public BaseGame(Board board, List<Player> players) {
+	public BaseGame(B board, List<Player> players) {
 		this.board = board;
 		this.players = players;
 	}
@@ -33,7 +33,7 @@ public abstract class BaseGame implements Game {
 	public void initRound() {
 		round++;
 		board.initRound();
-		for (Player player : players) {
+		for (Player player : getPlayers()) {
 			player.initRound();
 		}
 	}
@@ -50,7 +50,7 @@ public abstract class BaseGame implements Game {
 
 	private void playRound() {
 		initRound();
-		for (Player player : players) {
+		for (Player player : getPlayers()) {
 			player.move();
 			if (isFinished())
 				break;
@@ -65,4 +65,13 @@ public abstract class BaseGame implements Game {
 		}
 		finish();
 	}
+
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public B getBoard() {
+		return board;
+	}
+
 }

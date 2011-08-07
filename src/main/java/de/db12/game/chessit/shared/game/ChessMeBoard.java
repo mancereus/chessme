@@ -168,12 +168,11 @@ public class ChessMeBoard implements Board {
 		this.game = game;
 	}
 
-	static class View {
-		int minrow = Integer.MAX_VALUE;
-
-		int mincol = Integer.MAX_VALUE;
-		int maxrow = 0;
-		int maxcol = 0;
+	public static class View {
+		public int minrow = Integer.MAX_VALUE;
+		public int mincol = Integer.MAX_VALUE;
+		public int maxrow = 0;
+		public int maxcol = 0;
 
 		private final ChessMeBoard board;
 
@@ -211,6 +210,26 @@ public class ChessMeBoard implements Board {
 			buf.append(board.comment);
 			return buf.toString();
 		}
+
+		public int getMaxSize() {
+			return Math.max(maxrow - minrow, maxcol - mincol) + 1;
+		}
+
+		public List<Field> getFields() {
+			List<Field> fields = Lists.newArrayList();
+			for (int row = 0; row < board.fields.length; row++) {
+				if (row < minrow || row > maxrow) {
+					continue;
+				}
+				for (int col = 0; col < board.fields[row].length; col++) {
+					if (col < mincol || col > maxcol) {
+						continue;
+					}
+					fields.add(board.fields[row][col]);
+				}
+			}
+			return fields;
+		}
 	}
 
 	public List<Stone> getTrash() {
@@ -227,4 +246,10 @@ public class ChessMeBoard implements Board {
 		}
 		return inserts;
 	}
+
+	public void moveFromTo(Field source, Field target) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

@@ -8,12 +8,12 @@
 		<conf name="test" description="test libraries" />
 		<conf name="undeployed" description="sources"/>
 	</configurations>
-	<dependencies defaultconfmapping="runtime->default">
+	<dependencies defaultconfmapping="runtime->default;undeployed->sources">
 		<!-- base util libs; ref="latest.integration" for latest version -->
-		<dependency org="com.google.guava" name="guava" rev="r09" conf="runtime->default;undeployed->sources"/>
+		<dependency org="com.google.guava" name="guava" rev="r09"/>
 		<!-- DI -->
 	    <dependency org="com.google.gwt.inject" name="gin" rev="1.5.0"/>
-		<dependency org="com.google.inject" name="guice" rev="3.0"  conf="runtime->default;undeployed->sources"/>
+		<dependency org="com.google.inject" name="guice" rev="3.0" />
 		<dependency org="com.gwtplatform" name="gwtp-mvp-client" rev="0.6"/>
 		<dependency org="com.gwtplatform" name="gwtp-clients-common" rev="0.6"/>
 		<dependency org="com.gwtplatform" name="gwtp-processors" rev="0.6"/>

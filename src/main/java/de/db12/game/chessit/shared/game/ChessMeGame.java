@@ -11,7 +11,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-public class ChessMeGame extends BaseGame {
+public class ChessMeGame extends BaseGame<ChessMeBoard> {
 	public enum Color {
 		white, black;
 
@@ -53,7 +53,7 @@ public class ChessMeGame extends BaseGame {
 			return ret;
 		}
 
-		Color color;
+		public Color color;
 
 		Type type;
 
@@ -65,6 +65,10 @@ public class ChessMeGame extends BaseGame {
 		@Override
 		public String toString() {
 			return color.desc() + type.desc();
+		}
+
+		public Type getType() {
+			return type;
 		}
 	}
 
@@ -294,8 +298,8 @@ public class ChessMeGame extends BaseGame {
 
 	@Override
 	public void init() {
-		board.init();
-		for (Player player : players) {
+		getBoard().init();
+		for (Player player : getPlayers()) {
 			player.init();
 		}
 	}
@@ -307,7 +311,7 @@ public class ChessMeGame extends BaseGame {
 
 	@Override
 	public String toString() {
-		return board.toString() + "\nround: " + round + "\n" + players.get(0).showHand() + "    "
-				+ players.get(1).showHand();
+		return getBoard().toString() + "\nround: " + round + "\n" + getPlayers().get(0).showHand() + "    "
+				+ getPlayers().get(1).showHand();
 	}
 }

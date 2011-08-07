@@ -7,7 +7,7 @@
 	<inherits name='com.google.gwt.user.theme.dark.Dark' />
 
 	<!-- For development a default of `DEBUG` is recommended -->
-	<inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />
+<!-- 	<inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" /> -->
 
 	<!-- Inherit gwt-dnd support -->
 	<inherits name='com.allen_sauer.gwt.dnd.gwt-dnd' />

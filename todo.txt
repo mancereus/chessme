@@ -1,3 +1,5 @@
+* change model for gui
+* make GUi run
 * validate target fields support and attacks
 * refill hand after insert
-*
+

@@ -1,6 +1,6 @@
 package de.db12.game.chessit.shared.game;
 
-public interface Game {
+public interface Game<B> {
 	void finish();
 
 	void init();

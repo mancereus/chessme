@@ -6,6 +6,10 @@ public class BoardSize {
 	private int miny = Integer.MAX_VALUE;
 	private int maxy;
 
+	public BoardSize(int minrow, int maxrow, int mincol, int maxcol) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void updateX(int x) {
 		if (minx > x)
 			minx = x;
@@ -20,7 +24,4 @@ public class BoardSize {
 			maxy = y;
 	}
 
-	public int getMaxSize() {
-		return Math.max(maxx - minx, maxy - miny)+ 1;
-	}
 }
