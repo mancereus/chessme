@@ -10,14 +10,14 @@
 	</configurations>
 	<dependencies defaultconfmapping="runtime->default;undeployed->sources">
 		<!-- base util libs; ref="latest.integration" for latest version -->
-		<dependency org="com.google.guava" name="guava" rev="r09"/>
+<!-- 		<dependency org="com.google.guava" name="guava" rev="r09"/> -->
 		<!-- DI -->
 	    <dependency org="com.google.gwt.inject" name="gin" rev="1.5.0"/>
 		<dependency org="com.google.inject" name="guice" rev="3.0" />
 		<dependency org="com.gwtplatform" name="gwtp-mvp-client" rev="0.6"/>
 		<dependency org="com.gwtplatform" name="gwtp-clients-common" rev="0.6"/>
 		<dependency org="com.gwtplatform" name="gwtp-processors" rev="0.6"/>
-		<dependency org="com.google.code.gwt-dnd" name="gwt-dnd" rev="2.5.6"/>
+<!-- 		<dependency org="com.google.code.gwt-dnd" name="gwt-dnd" rev="3.0.1"/> -->
 <!-- 		<dependency org="com.google.gwt.inject" name="gin" rev="1.5.0"/> -->
 		
 <!-- 		<dependency org="com.google.inject.extensions" name="guice-multibindings" rev="3.0"/> -->

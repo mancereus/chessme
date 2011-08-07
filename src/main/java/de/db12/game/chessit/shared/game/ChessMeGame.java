@@ -1,15 +1,10 @@
 package de.db12.game.chessit.shared.game;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
 public class ChessMeGame extends BaseGame<ChessMeBoard> {
 	public enum Color {
@@ -41,15 +36,11 @@ public class ChessMeGame extends BaseGame<ChessMeBoard> {
 				Color.black, Type.rook), blackbishop1(Color.black, Type.bishop), blackbishop2(Color.black, Type.bishop), blackhorse1(
 				Color.black, Type.horse), blackhorse2(Color.black, Type.horse);
 		public static List<Stone> getAllStones(final Color color) {
-			Iterable<Stone> filter = Iterables.filter(Arrays.asList(values()), new Predicate<Stone>() {
-				@Override
-				public boolean apply(Stone arg0) {
-					return arg0.color == color;
-				}
-			});
-
 			List<Stone> ret = new ArrayList<Stone>();
-			Iterables.addAll(ret, filter);
+			for (Stone stone : values()) {
+				if (stone.color == color)
+					ret.add(stone);
+			}
 			return ret;
 		}
 
@@ -76,7 +67,7 @@ public class ChessMeGame extends BaseGame<ChessMeBoard> {
 		king("k", -1) {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
-				List<Field> targets = Lists.newArrayList();
+				List<Field> targets = new ArrayList<Field>();
 				checkField(targets, board, source.getRow(), source.getCol() - 1);
 				checkField(targets, board, source.getRow(), source.getCol() + 1);
 				checkField(targets, board, source.getRow() + dir, source.getCol() - 1);
@@ -93,7 +84,7 @@ public class ChessMeGame extends BaseGame<ChessMeBoard> {
 		queen("q", 5) {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
-				List<Field> targets = Lists.newArrayList();
+				List<Field> targets = new ArrayList<Field>();
 				for (int i = 0; i < 8; i++) {
 					if (!checkField(targets, board, source.getRow() - i, source.getCol() - i))
 						break;
@@ -133,7 +124,7 @@ public class ChessMeGame extends BaseGame<ChessMeBoard> {
 		pawn("p", 5) {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
-				List<Field> targets = Lists.newArrayList();
+				List<Field> targets = new ArrayList<Field>();
 				Color color = source.getStone().color;
 				checkFieldOnlyForKill(targets, board, source.getRow() + dir, source.getCol() - 1, color);
 				checkField(targets, board, source.getRow() + dir, source.getCol());
@@ -161,7 +152,7 @@ public class ChessMeGame extends BaseGame<ChessMeBoard> {
 		rook("r", 4) {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
-				List<Field> targets = Lists.newArrayList();
+				List<Field> targets = new ArrayList<Field>();
 				for (int i = 0; i < 8; i++) {
 					if (!checkField(targets, board, source.getRow() - i, source.getCol()))
 						break;
@@ -185,7 +176,7 @@ public class ChessMeGame extends BaseGame<ChessMeBoard> {
 		bishop("b", 4) {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
-				List<Field> targets = Lists.newArrayList();
+				List<Field> targets = new ArrayList<Field>();
 				for (int i = 0; i < 8; i++) {
 					if (!checkField(targets, board, source.getRow() - i, source.getCol() - i))
 						break;
@@ -209,7 +200,7 @@ public class ChessMeGame extends BaseGame<ChessMeBoard> {
 		horse("h", 4) {
 			@Override
 			public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
-				List<Field> targets = Lists.newArrayList();
+				List<Field> targets = new ArrayList<Field>();
 				targets.add(board.getField(source.getRow() - 2, source.getCol() + 1));
 				targets.add(board.getField(source.getRow() - 2, source.getCol() - 1));
 				targets.add(board.getField(source.getRow() + 2, source.getCol() + 1));
@@ -257,7 +248,7 @@ public class ChessMeGame extends BaseGame<ChessMeBoard> {
 		}
 
 		public List<Field> getFields(ChessMeBoard board, Field source, int dir) {
-			List<Field> targets = Lists.newArrayList();
+			List<Field> targets = new ArrayList<Field>();
 
 			return targets;
 		}
@@ -276,7 +267,7 @@ public class ChessMeGame extends BaseGame<ChessMeBoard> {
 	private static final Logger log = LoggerFactory.getLogger(BaseGame.class);
 
 	public static void main(String[] args) {
-		List<Player> players = Lists.newArrayList();
+		List<Player> players = new ArrayList<Player>();
 		ChessMeBoard board = new ChessMeBoard();
 		players.add(new ChessMePlayer(Color.white, board));
 		players.add(new ChessMePlayer(Color.black, board));

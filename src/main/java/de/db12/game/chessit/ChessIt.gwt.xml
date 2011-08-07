@@ -10,7 +10,8 @@
 <!-- 	<inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" /> -->
 
 	<!-- Inherit gwt-dnd support -->
-	<inherits name='com.allen_sauer.gwt.dnd.gwt-dnd' />
+	<inherits name="org.ducktools.slf4gwt.nologger" />
+<!-- 	<inherits name='com.allen_sauer.gwt.dnd.gwt-dnd' /> -->
 
 	<!-- Other module inherits -->
 	<inherits name="com.google.gwt.uibinder.UiBinder" />

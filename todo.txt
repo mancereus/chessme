@@ -1,4 +1,4 @@
-* change model for gui
+* repair gwtp
 * make GUi run
 * validate target fields support and attacks
 * refill hand after insert

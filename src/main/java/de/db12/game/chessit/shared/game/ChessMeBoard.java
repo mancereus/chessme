@@ -1,10 +1,9 @@
 package de.db12.game.chessit.shared.game;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 import de.db12.game.chessit.shared.game.ChessMeGame.Color;
 import de.db12.game.chessit.shared.game.ChessMeGame.Stone;
@@ -19,7 +18,7 @@ public class ChessMeBoard implements Board {
 	private String comment;
 
 	private Game game;
-	private final List<Stone> trash = Lists.newArrayList();
+	private final List<Stone> trash = new ArrayList<Stone>();
 
 	private int dec(int val) {
 		return Math.max(0, val - 1);
@@ -57,7 +56,7 @@ public class ChessMeBoard implements Board {
 	// }
 
 	public List<Field> getFieldsWithStones(Color color) {
-		List<Field> ret = Lists.newArrayList();
+		List<Field> ret = new ArrayList<Field>();
 		for (Field[] fieldrow : fields) {
 			for (Field fieldcol : fieldrow) {
 				if (!fieldcol.isEmpty() && fieldcol.getStone().color == color)
@@ -77,7 +76,7 @@ public class ChessMeBoard implements Board {
 
 	@Override
 	public Set<Field> updateReachableFields() {
-		Set<Field> ffs = Sets.newHashSet();
+		Set<Field> ffs = new HashSet<Field>();
 		for (Field[] frow : fields) {
 			for (Field fcol : frow) {
 				fcol.setReachable(false);
@@ -100,7 +99,7 @@ public class ChessMeBoard implements Board {
 	}
 
 	public Set<Field> getNeighbors(Field field) {
-		Set<Field> targets = Sets.newHashSet();
+		Set<Field> targets = new HashSet<Field>();
 		targets.add(getField(dec(field.getRow()), dec(field.getCol())));
 		targets.add(getField(dec(field.getRow()), field.getCol()));
 		targets.add(getField(dec(field.getRow()), inc(field.getCol())));
@@ -115,10 +114,10 @@ public class ChessMeBoard implements Board {
 	public Set<Move> getMoves(Player player, Field from) {
 		Set<Field> targets = updateReachableFields();
 		if (targets.isEmpty())
-			return Sets.newHashSet();
+			return new HashSet<Move>();
 		List<Field> moves = from.getMoves();
 		targets.retainAll(moves);
-		Set<Move> ret = Sets.newHashSet();
+		Set<Move> ret = new HashSet<Move>();
 		boolean moveok = false;
 		int value = 0;
 		for (Field target : targets) {
@@ -216,7 +215,7 @@ public class ChessMeBoard implements Board {
 		}
 
 		public List<Field> getFields() {
-			List<Field> fields = Lists.newArrayList();
+			List<Field> fields = new ArrayList<Field>();
 			for (int row = 0; row < board.fields.length; row++) {
 				if (row < minrow || row > maxrow) {
 					continue;
@@ -237,7 +236,7 @@ public class ChessMeBoard implements Board {
 	}
 
 	public Set<Field> getInsertFields(Stone stone) {
-		Set<Field> inserts = Sets.newHashSet();
+		Set<Field> inserts = new HashSet<Field>();
 		for (int row = 0; row < fields.length; row++) {
 			for (int col = 0; col < fields[row].length; col++) {
 				if (stone.type.isInsertable(this, stone, fields[row][col]))

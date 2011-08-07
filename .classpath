@@ -9,16 +9,26 @@
 	<classpathentry kind="lib" path="lib/runtime/asm-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/cglib-2.2.1-v20090111.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/gin-1.5.0.jar"/>
-	<classpathentry kind="lib" path="lib/runtime/guava-r09.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/guice-3.0.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/guice-assistedinject-3.0-rc2.jar"/>
-	<classpathentry kind="lib" path="lib/runtime/gwt-dnd-2.5.6.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/gwt-servlet-2.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/gwtp-clients-common-0.6.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/gwtp-mvp-client-0.6.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/gwtp-processors-0.6.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/javax.inject-1.jar"/>
-	<classpathentry kind="lib" path="lib/runtime/slf4j-api-1.6.1.jar"/>
-	<classpathentry kind="lib" path="lib/runtime/slf4j-simple-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/slf4j-api-1.6.1.jar" sourcepath="lib/undeployed/slf4j-api-1.6.1-sources.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/slf4j-simple-1.6.1.jar" sourcepath="lib/undeployed/slf4j-simple-1.6.1-sources.jar"/>
+	<classpathentry kind="lib" path="lib/undeployed/gin-1.5.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/undeployed/guava-r09-sources.jar"/>
+	<classpathentry kind="lib" path="lib/undeployed/guice-3.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/undeployed/gwtp-clients-common-0.6-sources.jar"/>
+	<classpathentry kind="lib" path="lib/undeployed/gwtp-mvp-client-0.6-sources.jar"/>
+	<classpathentry kind="lib" path="lib/undeployed/gwtp-processors-0.6-sources.jar"/>
+	<classpathentry kind="lib" path="lib/undeployed/slf4j-api-1.6.1-sources.jar"/>
+	<classpathentry kind="lib" path="lib/undeployed/slf4j-simple-1.6.1-sources.jar"/>
+	<classpathentry kind="lib" path="libsafe/slf4gwt-nologger-0.1.0-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="libsafe/slf4gwt-nologger-0.1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="libsafe/slf4j-emulation-0.1.0-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="libsafe/slf4j-emulation-0.1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

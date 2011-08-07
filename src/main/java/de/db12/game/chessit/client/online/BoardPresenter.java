@@ -3,7 +3,6 @@ package de.db12.game.chessit.client.online;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.allen_sauer.gwt.dnd.client.PickupDragController;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -52,7 +51,8 @@ public class BoardPresenter extends Presenter<BoardPresenter.MyView, BoardPresen
 	public static final String nameToken = "!online";
 
 	ChessMeGame game;
-	PickupDragController dragController = null;
+
+	// PickupDragController dragController = null;
 
 	@Inject
 	public BoardPresenter(EventBus eventBus, MyView view, MyProxy proxy) {

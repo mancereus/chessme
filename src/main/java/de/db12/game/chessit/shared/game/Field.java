@@ -1,11 +1,10 @@
 package de.db12.game.chessit.shared.game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.gwt.thirdparty.guava.common.collect.Lists;
 
 import de.db12.game.chessit.shared.game.ChessMeGame.Stone;
 
@@ -103,7 +102,7 @@ public class Field {
 
 	public List<Field> getMoves() {
 		if (isEmpty())
-			return Lists.newArrayList();
+			return new ArrayList<Field>();
 		return getStone().type.getFields(board, this, getStone().color.dir());
 	}
 }

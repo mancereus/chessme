@@ -1,12 +1,10 @@
 package de.db12.game.chessit.shared.game;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
-
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 
 import de.db12.game.chessit.shared.game.ChessMeGame.Color;
 import de.db12.game.chessit.shared.game.ChessMeGame.Stone;
@@ -16,8 +14,8 @@ public class ChessMePlayer implements Player {
 	private final static Random random = new Random();
 
 	private final Color color;
-	private final List<Stone> hand = Lists.newArrayList();
-	private List<Stone> stack = Lists.newArrayList();
+	private final List<Stone> hand = new ArrayList<Stone>();
+	private List<Stone> stack = new ArrayList<Stone>();
 	private final ChessMeBoard board;
 
 	public ChessMePlayer(Color color, ChessMeBoard board) {
@@ -29,7 +27,7 @@ public class ChessMePlayer implements Player {
 	private List<Field> getFieldWithStones() {
 		List<Field> fields = board.getFieldsWithStones(color);
 		if (fields.isEmpty())
-			return Lists.newArrayList();
+			return new ArrayList<Field>();
 		return fields;
 	}
 
@@ -100,7 +98,11 @@ public class ChessMePlayer implements Player {
 
 	@Override
 	public String showHand() {
-		return color.desc() + "(" + stack.size() + "): " + Joiner.on(" ").join(hand).toString();
+		StringBuffer buf = new StringBuffer(color.desc() + "(" + stack.size() + "): ");
+		for (Stone stone : hand) {
+			buf.append(stone.toString() + " ");
+		}
+		return buf.toString();
 	}
 
 	@Override
